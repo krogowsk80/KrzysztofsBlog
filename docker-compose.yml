@@ -1,0 +1,17 @@
+services:
+  jekyll:
+    image: ruby:3.3
+    command: >
+      bash -c "rm -rf Gemfile.lock _site && bundle install && bundle exec jekyll serve --host 0.0.0.0 --livereload"
+    ports:
+      - "4001:4000"
+      - "35729:35729"
+    volumes:
+      - .:/srv/jekyll
+      - bundle_cache:/usr/local/bundle
+    working_dir: /srv/jekyll
+    environment:
+      - JEKYLL_ENV=development
+
+volumes:
+  bundle_cache:
