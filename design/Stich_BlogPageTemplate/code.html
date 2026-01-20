@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DataDiveCraft - Blog Template</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;family=Space+Grotesk:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00c0c7",
+                        "background-light": "#f1f2f4",
+                        "background-dark": "#111113",
+                        "surface-dark": "#1A1A1D",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"],
+                        "mono": ["Space Grotesk", "monospace"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .code-block {
+            background: #1A1A1D;
+            border-left: 3px solid #00c0c7;
+            font-family: 'Space Grotesk', monospace;
+        }
+        .reading-progress-container {
+            backdrop-filter: blur(10px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111113] dark:text-[#E0E0E0] selection:bg-primary/30">
+<!-- Sticky Top Navigation -->
+<header class="sticky top-0 z-50 bg-background-light/90 dark:bg-background-dark/90 reading-progress-container border-b border-gray-200 dark:border-white/10">
+<div class="flex items-center p-4 justify-between max-w-2xl mx-auto">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+<span class="text-xs font-bold tracking-widest uppercase text-primary">DataDiveCraft</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-gray-500 dark:text-gray-400">bookmark</button>
+<button class="material-symbols-outlined text-gray-500 dark:text-gray-400">share</button>
+</div>
+</div>
+<!-- Progress Bar -->
+<div class="w-full h-1 bg-gray-200 dark:bg-gray-800">
+<div class="h-full bg-primary" style="width: 45%;"></div>
+</div>
+</header>
+<main class="max-w-2xl mx-auto px-5 pt-8 pb-20">
+<!-- Category & Meta -->
+<div class="flex items-center gap-3 mb-4">
+<span class="px-2 py-1 bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider rounded">AI &amp; Data Engineering</span>
+<span class="text-gray-500 text-xs">8 min read</span>
+<span class="text-gray-500 text-xs">•</span>
+<span class="text-gray-500 text-xs">Oct 24, 2023</span>
+</div>
+<!-- Headline -->
+<h1 class="text-3xl md:text-4xl font-extrabold leading-tight tracking-tight mb-6 text-gray-900 dark:text-white">
+            Optimizing Data Pipelines for Generative AI Workloads
+        </h1>
+<!-- Header Image -->
+<div class="mb-8 overflow-hidden rounded-xl border border-gray-200 dark:border-white/10">
+<div class="w-full aspect-video bg-center bg-no-repeat bg-cover flex flex-col justify-end" data-alt="abstract tech visualization of flowing neon data streams" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAwpYH-pk0SxWBcVVeX-K_p28PAJ3GOHX7GwZnTc5YdDL_vrGhBBfb-burIPDdx34b_WLmvfugfWTOp2ceoCQF_LrzUjEAXARda085CHegj_m4sugo6uBF9PTCQj9jZcRfibkn_PKrtf2OJ4KJwUpmzodIcuLlmexLqdNO-0lG261DpqRWKNtAscuON7QTXrLlOf788jFHMiDEHItbWvay8Cr_7lrHpZLWUUA8K8eTyg2rLpVM9fN6DhG5lyvBpJSL4LYK4KrLxoQ");'>
+<div class="bg-gradient-to-t from-black/60 to-transparent p-4">
+<p class="text-[10px] text-white/70 italic uppercase tracking-widest">Fig 1.1 — Latency orchestration in vector databases</p>
+</div>
+</div>
+</div>
+<!-- Article Content -->
+<div class="prose prose-invert max-w-none space-y-6 text-lg leading-relaxed text-gray-700 dark:text-gray-300">
+<p>
+                The shift from traditional ETL to LLM-driven architectures requires a fundamental rethink of data freshness. When building Generative AI applications, the bottleneck is no longer just the volume of data, but the <span class="text-primary font-semibold">semantic alignment</span> and vectorization speed.
+            </p>
+<h2 class="text-2xl font-bold text-gray-900 dark:text-white pt-4">The Vectorization Bottleneck</h2>
+<p>
+                In a standard RAG (Retrieval-Augmented Generation) pipeline, raw data must be chunked, embedded, and indexed. Here is how we structure the transformation layer for sub-second retrieval:
+            </p>
+<!-- Code Block Component -->
+<div class="my-8 rounded-lg overflow-hidden border border-white/5 shadow-2xl">
+<div class="flex items-center justify-between px-4 py-2 bg-[#202024] border-b border-white/5">
+<span class="text-xs font-mono text-gray-400">pipeline_config.py</span>
+<span class="material-symbols-outlined text-xs text-gray-500">content_copy</span>
+</div>
+<pre class="p-5 code-block text-sm overflow-x-auto"><code class="text-white">def <span class="text-primary">optimize_embedding_flow</span>(batch_data):
+    # Asynchronous chunking for LLM context windows
+    chunks = semantic_splitter.split(batch_data)
+    
+    <span class="text-gray-500"># Concurrent embedding via specialized GPU worker</span>
+    vectors = await embedding_model.encode_async(
+        chunks, 
+        batch_size=128,
+        pooling="mean"
+    )
+    
+    return upsert_to_vector_db(vectors)</code></pre>
+</div>
+<p>
+                Notice how the asynchronous worker allows the pipeline to scale horizontally. Without this decoupling, your LLM response times will strictly follow your embedding model's throughput limits.
+            </p>
+<!-- Technical Diagram Placeholder -->
+<div class="my-10 p-6 bg-surface-dark border border-primary/20 rounded-xl relative overflow-hidden">
+<div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, #00c0c7 1px, transparent 0); background-size: 24px 24px;"></div>
+<div class="relative z-10 flex flex-col items-center gap-4 py-8">
+<div class="flex gap-4">
+<div class="w-12 h-12 rounded-lg bg-primary/20 border border-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">database</span>
+</div>
+<div class="flex items-center">
+<div class="w-8 h-[2px] bg-primary/40"></div>
+<span class="material-symbols-outlined text-primary">arrow_forward</span>
+</div>
+<div class="w-12 h-12 rounded-lg bg-primary/20 border border-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">memory</span>
+</div>
+<div class="flex items-center">
+<div class="w-8 h-[2px] bg-primary/40"></div>
+<span class="material-symbols-outlined text-primary">arrow_forward</span>
+</div>
+<div class="w-12 h-12 rounded-lg bg-primary/20 border border-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">psychology</span>
+</div>
+</div>
+<p class="text-xs font-mono text-primary uppercase tracking-[0.2em] mt-4">Simplified RAG Architecture</p>
+</div>
+</div>
+<h3 class="text-xl font-bold text-gray-900 dark:text-white">Key Performance Metrics</h3>
+<ul class="space-y-3">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-sm mt-1">check_circle</span>
+<span><strong>P99 Latency:</strong> Target &lt; 250ms for the entire retrieval loop.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-sm mt-1">check_circle</span>
+<span><strong>Token Efficiency:</strong> Overlapping chunks should not exceed 15% to avoid redundancy.</span>
+</li>
+</ul>
+</div>
+<!-- Tags -->
+<div class="flex gap-2 flex-wrap mt-12 mb-8">
+<div class="flex h-7 shrink-0 items-center justify-center gap-x-2 rounded bg-surface-dark border border-white/10 px-3">
+<p class="text-gray-400 text-[10px] font-bold uppercase tracking-wider">Engineering</p>
+</div>
+<div class="flex h-7 shrink-0 items-center justify-center gap-x-2 rounded bg-surface-dark border border-white/10 px-3">
+<p class="text-gray-400 text-[10px] font-bold uppercase tracking-wider">Python</p>
+</div>
+<div class="flex h-7 shrink-0 items-center justify-center gap-x-2 rounded bg-surface-dark border border-white/10 px-3">
+<p class="text-gray-400 text-[10px] font-bold uppercase tracking-wider">MLOps</p>
+</div>
+</div>
+<!-- Author Bio Section -->
+<section class="border-t border-gray-200 dark:border-white/10 pt-10 mt-10">
+<div class="flex items-center gap-5 p-5 bg-surface-dark/50 dark:bg-surface-dark rounded-2xl border border-white/5">
+<div class="w-16 h-16 rounded-full overflow-hidden grayscale border-2 border-primary/20">
+<img class="w-full h-full object-cover" data-alt="professional portrait of a data architect" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHO9hEf5IKm279_gh40N5dVP1ndzBiA55oJWT0rn-6ydpq5SR_uxZLJMzHYtQt69gqO5VqWjsVBV1W6SzAGekmjoPK23-S9O7YEXYE8OkHiy5FBf1oWb_ISwkXfqYg5Reaa1GYEO8YhbHJPFirqA-W_RPnIyD3CECnGXeUiGULisQ0CjjvO8gsXutKrCuRfXR-el05B6KOg906j45gQLvVZW_RATs57DNYC-albna4dNDCjC4nWT4Sevko14ZYKS0msnj-OIdclQ"/>
+</div>
+<div>
+<h4 class="text-lg font-bold text-white leading-none mb-1">Marcus Thorne</h4>
+<p class="text-sm text-gray-500 mb-2">Senior Data Architect @ DataDiveCraft</p>
+<div class="flex gap-3 text-primary">
+<span class="material-symbols-outlined text-lg">terminal</span>
+<span class="material-symbols-outlined text-lg">alternate_email</span>
+<span class="material-symbols-outlined text-lg">hub</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Related Articles -->
+<section class="mt-16">
+<h3 class="text-lg font-bold mb-6 flex items-center gap-2">
+<span class="w-6 h-[2px] bg-primary"></span>
+                RELATED INSIGHTS
+            </h3>
+<div class="grid grid-cols-1 gap-4">
+<div class="group flex gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors border border-transparent hover:border-white/5">
+<div class="w-24 h-24 rounded-lg bg-gray-800 shrink-0 overflow-hidden">
+<img class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity" data-alt="dashboard and charts visual" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwjPxrWBun76lV7hc-6MreBp0VgbotuboLijImr7VME-QHr4uhc3RQ-KyvZQkscreq20t-FArv7zmlP27I3KnQhP8c-1PwF19E-rjv4KcGyQQz2A_Yt2F-xLh9mBFW_rxa-3gTQy7UMP3nbVQZ2dJ_obImS2Z8M7fq4wsdmZCCchztDu6BjVHBib3h6TrgnQ9BN8cyTL4RaboC3Mgq3-HhYkI6aAUV1s5qNemUaQo9CwDkcmOVY0__7Z-Mkorxw06R6kVbyZ3_3w"/>
+</div>
+<div class="flex flex-col justify-center">
+<span class="text-[10px] font-bold text-primary uppercase mb-1">Data Governance</span>
+<h4 class="text-sm font-bold text-gray-200 leading-snug">Scaling Data Quality for Enterprise LLMs</h4>
+</div>
+</div>
+<div class="group flex gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors border border-transparent hover:border-white/5">
+<div class="w-24 h-24 rounded-lg bg-gray-800 shrink-0 overflow-hidden">
+<img class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity" data-alt="deep sea network visualization" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfyCNsRTVyYziJ1iQPD4kjGsHJ-3z8aiPe6vrkGT4zYF7AoGf1HWLRS_XH8WOw-iBXXrXwSBDK9j6vRdBLfG7QPVDL0lexqedWMah5-o1lDRwrsMWwshRFdwiqfW-wY-ceab4umjIs8xRLlCM77JDgHKt4LT_DZ7wXGymPW9CxRQqMlkLs93Ye60-5MloCcIM2lwJDZhOwn0rYxmJQcx4v14MN2ZNFqoJpt8G9tjmeODhOy3KqMPVMVrspEnUz-sinJiECLxzZSg"/>
+</div>
+<div class="flex flex-col justify-center">
+<span class="text-[10px] font-bold text-primary uppercase mb-1">Infrastructure</span>
+<h4 class="text-sm font-bold text-gray-200 leading-snug">Serverless Vector Indexing with AWS Lambda</h4>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar (iOS Style) -->
+<nav class="fixed bottom-0 left-0 right-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-xl border-t border-gray-200 dark:border-white/10 px-6 py-3 pb-8 z-50">
+<div class="max-w-md mx-auto flex justify-between items-center text-gray-500 dark:text-gray-400">
+<button class="flex flex-col items-center gap-1">
+<span class="material-symbols-outlined">home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined">menu_book</span>
+</button>
+<button class="flex flex-col items-center gap-1">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="flex flex-col items-center gap-1">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</nav>
+<!-- Table of Contents Toggle (Floating) -->
+<div class="fixed bottom-24 right-5 z-40">
+<button class="w-12 h-12 bg-primary text-black rounded-full flex items-center justify-center shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">format_list_bulleted</span>
+</button>
+</div>
+</body></html>

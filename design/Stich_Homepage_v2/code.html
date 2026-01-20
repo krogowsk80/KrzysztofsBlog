@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DataDiveCraft | Technical Consulting</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00e5ff",
+                        "navy": {
+                            "900": "#0f172a",
+                            "950": "#020617",
+                        },
+                        "charcoal": {
+                            "800": "#1e1e21",
+                            "900": "#0a0a0c",
+                            "950": "#050505",
+                        },
+                    },
+                    fontFamily: {
+                        "sans": ["Manrope", "sans-serif"],
+                        "heading": ["Space Grotesk", "sans-serif"],
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .bg-mesh {
+                background-image: 
+                    radial-gradient(at 0% 0%, rgba(0, 229, 255, 0.15) 0px, transparent 50%),
+                    radial-gradient(at 100% 0%, rgba(37, 99, 235, 0.1) 0px, transparent 50%);
+            }
+            .data-dots {
+                background-image: radial-gradient(rgba(0, 229, 255, 0.2) 1px, transparent 0);
+                background-size: 32px 32px;
+            }
+            .glass {
+                background: rgba(15, 23, 42, 0.6);
+                backdrop-filter: blur(12px);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+            }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-charcoal-950 font-sans text-slate-300 antialiased selection:bg-primary/30">
+<header class="fixed top-0 left-0 right-0 z-[100] bg-charcoal-950/80 backdrop-blur-md border-b border-white/5">
+<div class="px-5 h-16 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 bg-primary rounded-sm flex items-center justify-center">
+<span class="material-symbols-outlined text-charcoal-950 text-xl font-bold">hub</span>
+</div>
+<span class="text-lg font-heading font-bold text-white tracking-tight">DataDiveCraft</span>
+</div>
+<div class="flex items-center gap-3">
+<button class="bg-primary text-charcoal-950 px-4 py-1.5 rounded-full text-sm font-bold hover:brightness-110 transition-all">
+                    Contact
+                </button>
+<button class="p-2 text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-6 px-5 py-2 overflow-x-auto no-scrollbar border-t border-white/5 text-[11px] font-bold uppercase tracking-widest text-slate-400 whitespace-nowrap">
+<a class="text-primary border-b border-primary" href="#">Solutions</a>
+<a href="#">Case Studies</a>
+<div class="flex items-center gap-1">
+<span>Insights</span>
+<span class="material-symbols-outlined text-[14px]">expand_more</span>
+</div>
+<a href="#">About</a>
+</div>
+</header>
+<main class="pt-28 pb-20">
+<section class="relative px-5 pt-10 pb-16 overflow-hidden bg-mesh">
+<div class="absolute inset-0 data-dots opacity-40"></div>
+<div class="relative z-10">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-6">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+<span class="text-[10px] font-bold text-primary tracking-[0.2em] uppercase leading-none">Intelligence Engine</span>
+</div>
+<h1 class="text-4xl font-heading font-bold text-white leading-tight mb-6">
+                    Turning Complex Data into <span class="text-primary italic">Competitive Edge</span>
+</h1>
+<p class="text-base text-slate-400 mb-8 max-w-sm">
+                    Strategic data architecture, high-performance engineering, and production-grade AI for technical-first organizations.
+                </p>
+<div class="flex flex-col gap-3">
+<button class="w-full bg-white text-charcoal-950 font-bold py-4 rounded-lg flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+                        Explore Our Solutions
+                        <span class="material-symbols-outlined text-sm">arrow_outward</span>
+</button>
+<button class="w-full bg-navy-900/50 border border-white/10 text-white font-bold py-4 rounded-lg">
+                        View Case Studies
+                    </button>
+</div>
+</div>
+</section>
+<section class="px-5 py-16 bg-charcoal-900/50">
+<div class="mb-10">
+<h2 class="text-[10px] font-bold text-primary uppercase tracking-[0.3em] mb-2">Technical Domains</h2>
+<h3 class="text-2xl font-heading font-bold text-white">Our Expertise</h3>
+</div>
+<div class="space-y-4">
+<div class="glass p-6 rounded-2xl">
+<span class="material-symbols-outlined text-primary text-3xl mb-4">polyline</span>
+<h4 class="text-lg font-bold text-white mb-2">Data Architecture</h4>
+<p class="text-sm text-slate-400 mb-4">Scalable schemas and storage strategies designed for future-proof growth and zero latency.</p>
+<div class="flex gap-2">
+<span class="bg-white/5 text-[10px] px-2 py-1 rounded text-slate-300">Snowflake</span>
+<span class="bg-white/5 text-[10px] px-2 py-1 rounded text-slate-300">Redshift</span>
+</div>
+</div>
+<div class="glass p-6 rounded-2xl">
+<span class="material-symbols-outlined text-primary text-3xl mb-4">settings_ethernet</span>
+<h4 class="text-lg font-bold text-white mb-2">Data Engineering</h4>
+<p class="text-sm text-slate-400 mb-4">Industrial-strength ETL/ELT pipelines and real-time streaming infrastructure using modern toolchains.</p>
+<div class="flex gap-2">
+<span class="bg-white/5 text-[10px] px-2 py-1 rounded text-slate-300">dbt</span>
+<span class="bg-white/5 text-[10px] px-2 py-1 rounded text-slate-300">Apache Spark</span>
+</div>
+</div>
+<div class="glass p-6 rounded-2xl">
+<span class="material-symbols-outlined text-primary text-3xl mb-4">auto_awesome</span>
+<h4 class="text-lg font-bold text-white mb-2">AI &amp; Machine Learning</h4>
+<p class="text-sm text-slate-400 mb-4">From RAG architectures to predictive modeling, we build intelligence that integrates seamlessly.</p>
+<div class="flex gap-2">
+<span class="bg-white/5 text-[10px] px-2 py-1 rounded text-slate-300">PyTorch</span>
+<span class="bg-white/5 text-[10px] px-2 py-1 rounded text-slate-300">Vector DBs</span>
+</div>
+</div>
+</div>
+</section>
+<section class="px-5 py-16">
+<div class="flex items-end justify-between mb-8">
+<div>
+<h2 class="text-[10px] font-bold text-primary uppercase tracking-[0.3em] mb-2">In Practice</h2>
+<h3 class="text-2xl font-heading font-bold text-white">Success Stories</h3>
+</div>
+<a class="text-xs text-primary font-bold" href="#">View All</a>
+</div>
+<div class="space-y-8">
+<div class="group relative">
+<div class="aspect-[16/10] rounded-2xl overflow-hidden bg-navy-900 mb-4 border border-white/5">
+<img alt="Cloud visualization" class="w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtOL1mawlzmpvtkPxUYlepaKEIlPPyWE7nkN4Kd1J9MaXrvhfyMf_S_t8H87FvQmm5mlCKEWCCrENjeI0yDhvYMcs3snbz_FzGCfX_szYbhRtYIPNAIoBes8RKXkbYPUx9Qnf_WqFwdZz8tOIUiR0edfwNjwQy-jkSs7NTreSY-17QwumAoBSKhPefumb052HgCLm47AefGMSdhLCQCu5vpbMEVMvZt-bUIGT-TD_zojR4wlXaQaT_7k5d0CePgYk8fL3hSP0hZw"/>
+</div>
+<div class="space-y-2">
+<div class="flex items-center gap-2 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+<span>FinTech</span>
+<span class="w-1 h-1 bg-slate-700 rounded-full"></span>
+<span>Migration</span>
+</div>
+<h4 class="text-xl font-bold text-white leading-snug group-hover:text-primary transition-colors">Scaling Real-time Analytics for a Global Finance Leader</h4>
+<p class="text-sm text-slate-400 line-clamp-2">How we moved 10PB of legacy data to a modern cloud stack with zero downtime and 3x faster queries.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="px-5 py-16 bg-navy-950/30">
+<div class="mb-8">
+<h2 class="text-[10px] font-bold text-primary uppercase tracking-[0.3em] mb-2">Deep Dives</h2>
+<h3 class="text-2xl font-heading font-bold text-white">Latest Insights</h3>
+</div>
+<div class="grid grid-cols-1 gap-6">
+<div class="flex gap-4">
+<div class="w-24 h-24 shrink-0 rounded-xl overflow-hidden bg-charcoal-800 border border-white/5">
+<img alt="Technical code" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9X55iE7-N0SWDuVNO7ohusRlS-IdxdAkurLqJXFZWtl4x0gGaq1m4Bag0ivIlgbApGQdg0Cn6QIZrrpxLm9X_NLkey8z125DVxTQ5xP8Gm7u6ZNYOWna2XlayCZpAHGq8fiq22ojMikSEJfbKnSL4gXHYAR9manPH1MPm7-08CAJvgdH2aFfK8cMnXIOmj6Ruc8wh5cp47UtVyG-K1iyhb7Wo9SszTIr24cwMUSHSTxxmOP5JO9Cbz8-D-vBFMkSMo_Bq_m4sWA"/>
+</div>
+<div class="flex flex-col justify-center">
+<span class="text-[10px] text-primary font-bold uppercase tracking-widest mb-1">Architecture</span>
+<h5 class="text-sm font-bold text-white leading-tight line-clamp-2">Mastering Vector Databases for Large Language Models</h5>
+<span class="text-[10px] text-slate-500 mt-2 font-medium">May 12, 2024</span>
+</div>
+</div>
+<div class="flex gap-4 pt-6 border-t border-white/5">
+<div class="w-24 h-24 shrink-0 rounded-xl overflow-hidden bg-charcoal-800 border border-white/5">
+<div class="w-full h-full bg-gradient-to-br from-primary/20 to-navy-900 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary/40">dataset</span>
+</div>
+</div>
+<div class="flex flex-col justify-center">
+<span class="text-[10px] text-primary font-bold uppercase tracking-widest mb-1">Engineering</span>
+<h5 class="text-sm font-bold text-white leading-tight line-clamp-2">Why Your Data Lakehouse Is Performance-Limited</h5>
+<span class="text-[10px] text-slate-500 mt-2 font-medium">Apr 28, 2024</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-10 py-3 border border-white/10 rounded-lg text-xs font-bold text-white uppercase tracking-widest">
+                Explore Blog
+            </button>
+</section>
+<section class="mx-5 my-16 p-8 rounded-3xl bg-navy-900 relative overflow-hidden">
+<div class="absolute inset-0 bg-mesh opacity-20 pointer-events-none"></div>
+<div class="relative z-10 text-center">
+<h2 class="text-2xl font-heading font-bold text-white mb-4">Start Your Data Transformation</h2>
+<p class="text-slate-400 text-sm mb-8">Join leading companies that rely on our specialized engineering team to build their data future.</p>
+<button class="bg-primary text-charcoal-950 font-bold px-8 py-4 rounded-full text-sm uppercase tracking-widest shadow-[0_10px_30px_rgba(0,229,255,0.3)]">
+                    Get in Touch
+                </button>
+</div>
+</section>
+</main>
+<div class="fixed bottom-0 left-0 right-0 z-50 px-5 pb-6">
+<nav class="bg-charcoal-900/90 backdrop-blur-xl border border-white/10 rounded-full h-16 flex items-center justify-around shadow-2xl">
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined fill-1">home</span>
+<span class="text-[10px] font-bold">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-500">
+<span class="material-symbols-outlined">layers</span>
+<span class="text-[10px] font-bold">Solutions</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-500">
+<span class="material-symbols-outlined">auto_stories</span>
+<span class="text-[10px] font-bold">Stories</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-500">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="text-[10px] font-bold">Contact</span>
+</button>
+</nav>
+</div>
+
+</body></html>
