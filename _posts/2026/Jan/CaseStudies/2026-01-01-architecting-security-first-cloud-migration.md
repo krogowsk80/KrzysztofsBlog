@@ -6,9 +6,17 @@ date: 2026-01-01 09:00:00 -0500
 author: main_author
 categories: [Case Studies]
 tags: [cloud migration, azure, databricks, security, architecture]
+words_per_minute: 100
+header:
+  teaser: /assets/images/2026/Jan/architecting_security_first_cloud_migration.png
 ---
 
+![Architecting a Security-First Cloud Migration architecture diagram](/assets/images/2026/Jan/architecting_security_first_cloud_migration.png){: .align-center style="width: 60%;"}
+
+
 > Legacy-to-Cloud Transformation | High-Stakes Governance | 640M+ Record Volume
+
+<br>
 
 ## The Challenge: Breaking the “On-Premise” Deadlock
 

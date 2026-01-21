@@ -6,6 +6,9 @@ date: 2026-01-01 09:00:00 -0500
 author: main_author
 categories: [Case Studies]
 tags: [databricks, cost optimization, ci/cd, architecture, retail]
+words_per_minute: 200
+header:
+  teaser: /assets/images/2026/Jan/modernizing_market_data.png
 ---
 
 > Role: Lead Solution Architect / Strategic Advisor | Client: National Canadian Retailer (Regulated Market)
