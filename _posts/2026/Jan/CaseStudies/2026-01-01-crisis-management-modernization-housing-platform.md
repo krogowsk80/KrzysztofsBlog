@@ -12,8 +12,13 @@ header:
 ---
 
 
+![Crisis Management & Modernization for a National Housing Platform diagram](/assets/images/2026/Jan/crisis_management_modernization.png){: .align-center style="width: 60%;"}
+
+
+
 > Role: Senior BI Solution Architect / Strategic Advisor | Client: Public Sector Ministry (Housing & Social Services)
 
+<br>
 
 ## The Strategic Challenge: “Rescuing a Failing Multi-Year Investment”
 

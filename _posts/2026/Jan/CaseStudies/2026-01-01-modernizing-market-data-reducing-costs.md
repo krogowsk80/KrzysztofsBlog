@@ -11,7 +11,13 @@ header:
   teaser: /assets/images/2026/Jan/modernizing_market_data.png
 ---
 
+
+![Modernizing Market Data & Reducing Costs for National Retailer diagram](/assets/images/2026/Jan/modernizing_market_data.png){: .align-center style="width: 60%;"}
+
+
 > Role: Lead Solution Architect / Strategic Advisor | Client: National Canadian Retailer (Regulated Market)
+
+<br>
 
 ## The Strategic Challenge: “Flying Blind at High Cost”
 
