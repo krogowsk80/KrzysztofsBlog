@@ -1,5 +1,245 @@
-<!-- start custom head snippets -->
+<!-- Fonts from code.html -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 
-<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<style>
+  /* Override Minimal Mistakes Variables & Styles to match code.html */
+  :root {
+    --background-color: #050505; /* charcoal-950 */
+    --text-color: #cbd5e1;       /* slate-300 */
+    --primary-color: #00e5ff;    /* primary cyan */
+    --link-color: #00e5ff;
+    --link-color-hover: #fff;
+    --masthead-link-color: #fff;
+    --masthead-link-color-hover: #00e5ff;
+    --footer-background-color: #0f172a; /* navy-900 */
+    --footer-text-color: #94a3b8;
+  }
 
-<!-- end custom head snippets -->
+  body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  /* Headings */
+  h1, h2, h3, h4, h5, h6, .page__title {
+    color: #ffffff;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  /* Masthead (Header) */
+  .masthead {
+    background-color: rgba(5, 5, 5, 0.9) !important; /* charcoal-950 with opacity */
+    border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  
+  .masthead__inner-wrap {
+    background-color: transparent !important;
+  }
+
+  .greedy-nav {
+    background-color: transparent !important;
+  }
+
+  .site-title, .site-title:visited, .site-title:hover {
+    color: #fff !important;
+  }
+
+  .masthead__menu-item a {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    color: #cbd5e1 !important; /* slate-300 */
+  }
+
+  .masthead__menu-item a:hover {
+    color: var(--primary-color) !important;
+  }
+
+  /* Footer */
+  .page__footer {
+    background-color: var(--footer-background-color);
+    color: var(--footer-text-color);
+  }
+  
+  .page__footer footer {
+    color: inherit;
+  }
+
+  /* Buttons */
+  .btn--primary {
+    background-color: var(--primary-color);
+    color: #050505; /* charcoal-950 */
+    border-color: var(--primary-color);
+    font-weight: 700;
+  }
+  
+  .btn--primary:hover {
+    background-color: #fff;
+    color: #050505;
+    border-color: #fff;
+  }
+
+  /* Remove white background from main content area */
+  .initial-content {
+    background: transparent;
+  }
+
+  /* Archive Items (Blog Posts) as Cards */
+  .archive__item {
+    background-color: #0f172a; /* navy-900 from code.html */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.5em;
+    margin-bottom: 1.5em;
+    transition: all 0.3s ease;
+  }
+
+  .archive__item article {
+    border: none; /* remove default bottom border */
+  }
+
+  .archive__item-teaser {
+    background-color: transparent;
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .archive__item:hover {
+    background-color: #1e293b;
+    border-color: var(--primary-color);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+  }
+
+  .archive__item-title a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .archive__item-title a:hover {
+    color: var(--primary-color);
+  }
+
+  .archive__item-excerpt {
+    color: #94a3b8; /* slate-400 from code.html */
+  }
+
+  /* General Links */
+  a {
+    color: var(--link-color);
+  }
+  
+  a:hover {
+    color: var(--link-color-hover);
+  }
+  
+  /* Tables and Code */
+  code, kbd, pre, samp {
+    font-family: monospace;
+  }
+
+  /* Insights Page Specific Styles */
+  .insights-header {
+    margin-bottom: 2rem;
+  }
+  
+  .insights-subtitle {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    margin-bottom: 0.5rem;
+    display: block;
+    line-height: 1;
+  }
+  
+  .insights-title {
+    font-size: 1.5rem; /* text-2xl */
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .insights-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .insight-card {
+    display: flex;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  
+  .insight-card:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
+
+  .insight-image-container {
+    width: 6rem;
+    height: 6rem;
+    flex-shrink: 0;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background-color: #1e1e21;
+    border: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .insight-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .insight-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .insight-tag {
+    font-size: 10px;
+    color: var(--primary-color);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.25rem;
+  }
+
+  .insight-card-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.25;
+    margin: 0;
+  }
+  
+  .insight-card-title a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .insight-card-title a:hover {
+    color: var(--primary-color);
+  }
+
+  .insight-date {
+    font-size: 10px;
+    color: #64748b;
+    margin-top: 0.5rem;
+    font-weight: 500;
+  }
+</style>
