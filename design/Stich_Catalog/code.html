@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Insights Catalog - DataDiveCraft</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00c0c7",
+                        "background-light": "#f1f2f4",
+                        "background-dark": "#0a0a0b",
+                        "card-dark": "#151518",
+                        "surface-dark": "#1f1f23",
+                        "accent-glow": "rgba(0, 192, 199, 0.4)",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"],
+                        "heading": ["Space Grotesk", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .glass-header {
+                @apply sticky top-0 z-[60] backdrop-blur-md bg-black/80 border-b border-white/10;
+            }
+            .hide-scrollbar::-webkit-scrollbar {
+                display: none;
+            }
+            .hide-scrollbar {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            .glowing-card {
+                @apply transition-all duration-300 border border-white/5 relative;
+            }
+            .glowing-card:hover {
+                @apply border-primary/50;
+                box-shadow: 0 0 20px rgba(0, 192, 199, 0.15);
+            }
+            .ios-bottom-nav {
+                @apply fixed bottom-0 left-0 right-0 backdrop-blur-xl bg-black/90 border-t border-white/10 px-6 pt-3 pb-8 flex items-center justify-between z-50;
+            }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-dark font-display text-slate-100 min-h-screen pb-32">
+<header class="glass-header px-4 py-4 flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 bg-primary rounded-lg flex items-center justify-center shadow-[0_0_15px_rgba(0,192,199,0.3)]">
+<span class="material-symbols-outlined text-background-dark font-bold text-xl">database</span>
+</div>
+<div class="flex flex-col">
+<span class="font-heading text-sm font-bold tracking-[0.15em] text-white leading-none">DATADIVECRAFT</span>
+<span class="text-[10px] text-primary font-bold tracking-widest uppercase mt-0.5">Consulting</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10">
+<span class="material-symbols-outlined text-white text-xl">search</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10">
+<span class="material-symbols-outlined text-white text-xl">menu</span>
+</button>
+</div>
+</header>
+<main class="max-w-md mx-auto px-4 pt-6">
+<div class="mb-6">
+<h1 class="font-heading text-3xl font-bold text-white mb-1">Insights</h1>
+<p class="text-slate-400 text-sm font-medium">Technical intelligence and data protocols.</p>
+</div>
+<div class="sticky top-[73px] z-40 -mx-4 px-4 bg-background-dark/95 backdrop-blur-sm py-3 mb-6">
+<div class="flex gap-2 overflow-x-auto hide-scrollbar">
+<button class="flex h-9 shrink-0 items-center justify-center rounded-full bg-primary px-5 text-background-dark text-xs font-bold shadow-lg shadow-primary/20">
+                    Latest
+                </button>
+<button class="flex h-9 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-white/10 px-5 text-slate-300 text-xs font-bold hover:border-primary transition-colors">
+                    AI/ML
+                </button>
+<button class="flex h-9 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-white/10 px-5 text-slate-300 text-xs font-bold hover:border-primary transition-colors">
+                    Data Architecture
+                </button>
+<button class="flex h-9 shrink-0 items-center justify-center rounded-full bg-surface-dark border border-white/10 px-5 text-slate-300 text-xs font-bold hover:border-primary transition-colors">
+                    Data Engineering
+                </button>
+</div>
+</div>
+<div class="space-y-6">
+<article class="glowing-card bg-card-dark rounded-2xl overflow-hidden group">
+<div class="aspect-[16/9] w-full overflow-hidden">
+<img alt="Architecture" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt0KtNSQAXcEk4wl8S3y_uKA1LIcJ2z8AUwdxOwwNK62SNQDKcCWVtLLsjuMuE8UAyXsnfdIWYp6744qIDv6pYIJiBEFRZthducGqM7y1lQHYF2MamsMIXAvJuCK8oM_uyoQZ-Ith9Bmxzn6flOKo9Dw5INUwWy6ZAHFuDJeDFaJns1j_48_KmpM5Cx2TG4-v6VHLVflraLf_bdVpA4jytb9E6xJUAEq4F6T1svjuQZc9ZchvRHXvjbKSq4ufnvobQ6LXbgRLgaA"/>
+<div class="absolute top-4 left-4">
+<span class="px-2.5 py-1 bg-black/60 backdrop-blur-md border border-white/10 text-primary text-[10px] font-bold uppercase tracking-widest rounded-md">Data Architecture</span>
+</div>
+</div>
+<div class="p-5">
+<div class="flex items-center gap-3 mb-3">
+<span class="text-slate-500 text-[10px] font-bold uppercase tracking-tighter">May 24, 2024</span>
+<span class="w-1 h-1 rounded-full bg-slate-700"></span>
+<span class="text-slate-500 text-[10px] font-bold uppercase tracking-tighter">12 min read</span>
+</div>
+<h2 class="font-heading text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors leading-tight">
+                        Scalable Vector Architectures for Modern LLM Workloads
+                    </h2>
+<p class="text-slate-400 text-sm leading-relaxed mb-4 line-clamp-2">
+                        Deep dive into indexing strategies and high-dimensional search optimization for enterprise-grade retrieval systems.
+                    </p>
+<div class="flex items-center text-primary text-xs font-bold uppercase tracking-widest gap-2">
+                        Read Full Protocol <span class="material-symbols-outlined text-sm">trending_flat</span>
+</div>
+</div>
+</article>
+<article class="glowing-card bg-card-dark rounded-2xl overflow-hidden group">
+<div class="aspect-[16/9] w-full overflow-hidden">
+<img alt="AI/ML" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBx_3VPvMqOtFZ0OZ5S5jMOqVlzGksdlZASguSiFIg-z1i3uc_1Yf3HteuKUrAhywMTBdDpptNdu2uA44VyGyQ5u9NSw-U5nnvqxuglSMykZNDp8cJYa5N7VykXtcIf_RyMparR7I8MtqBEGgLk_snYRcZZuCQIgmhg-gd2RCqEVHx_b1DdPztIuy6fvMSG75yquoBoDVUzkRbsyv1vm_uoT6-KuILyasrF60YzvgUdkCBpBkuZ2LxueF3xUylxsoX-3aARkR7LyQ"/>
+<div class="absolute top-4 left-4">
+<span class="px-2.5 py-1 bg-black/60 backdrop-blur-md border border-white/10 text-primary text-[10px] font-bold uppercase tracking-widest rounded-md">AI/ML</span>
+</div>
+</div>
+<div class="p-5">
+<div class="flex items-center gap-3 mb-3">
+<span class="text-slate-500 text-[10px] font-bold uppercase tracking-tighter">May 21, 2024</span>
+<span class="w-1 h-1 rounded-full bg-slate-700"></span>
+<span class="text-slate-500 text-[10px] font-bold uppercase tracking-tighter">15 min read</span>
+</div>
+<h2 class="font-heading text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors leading-tight">
+                        The MLOps Lifecycle: From Sandbox to Global Production
+                    </h2>
+<p class="text-slate-400 text-sm leading-relaxed mb-4 line-clamp-2">
+                        A blueprint for automated model retraining, drift detection, and observability at the edge.
+                    </p>
+<div class="flex items-center text-primary text-xs font-bold uppercase tracking-widest gap-2">
+                        Read Full Protocol <span class="material-symbols-outlined text-sm">trending_flat</span>
+</div>
+</div>
+</article>
+<article class="glowing-card bg-card-dark rounded-2xl overflow-hidden group">
+<div class="aspect-[16/9] w-full overflow-hidden">
+<img alt="Engineering" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCy5rdeldkqBAcXJPQLA2bxBoV74yk7noc4APLYcZ9HJPz3KM1B6th377B0m3c2X-dn465Hv-8QYrmbq5e9T6NIP5_MJDb1yfx1Y2OCqNMes-3W9dZGG9qav0QIj0ISiOZSLdmy6zORgdWKuNqfBzLMrpPLnHZnIhug5nmrygS32RbzRMQ5T1mD95_1JvSRz6iFy_QGY6eDl7fBt7BiAloLSuBidIJIv5Xacj37FL7O0N9JedI6SWmMHhRbmSlYCP46ycbyZQyCzg"/>
+<div class="absolute top-4 left-4">
+<span class="px-2.5 py-1 bg-black/60 backdrop-blur-md border border-white/10 text-primary text-[10px] font-bold uppercase tracking-widest rounded-md">Data Engineering</span>
+</div>
+</div>
+<div class="p-5">
+<div class="flex items-center gap-3 mb-3">
+<span class="text-slate-500 text-[10px] font-bold uppercase tracking-tighter">May 18, 2024</span>
+<span class="w-1 h-1 rounded-full bg-slate-700"></span>
+<span class="text-slate-500 text-[10px] font-bold uppercase tracking-tighter">8 min read</span>
+</div>
+<h2 class="font-heading text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors leading-tight">
+                        Zero-Trust Data Pipelines: Security by Design
+                    </h2>
+<p class="text-slate-400 text-sm leading-relaxed mb-4 line-clamp-2">
+                        Implementing end-to-end encryption and identity-based access for real-time streaming architectures.
+                    </p>
+<div class="flex items-center text-primary text-xs font-bold uppercase tracking-widest gap-2">
+                        Read Full Protocol <span class="material-symbols-outlined text-sm">trending_flat</span>
+</div>
+</div>
+</article>
+</div>
+<div class="py-12 flex justify-center">
+<button class="w-full py-4 rounded-xl bg-surface-dark border border-white/10 text-white font-bold text-sm tracking-widest uppercase hover:bg-white/5 active:scale-[0.98] transition-all">
+                Load Older Insights
+            </button>
+</div>
+</main>
+<nav class="ios-bottom-nav">
+<div class="flex flex-col items-center gap-1 group">
+<span class="material-symbols-outlined text-slate-500 group-hover:text-primary">dashboard</span>
+<span class="text-[9px] text-slate-500 font-bold tracking-tighter">SOLUTIONS</span>
+</div>
+<div class="flex flex-col items-center gap-1 group">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1">auto_stories</span>
+<span class="text-[9px] text-primary font-bold tracking-tighter">INSIGHTS</span>
+</div>
+<div class="flex flex-col items-center justify-center -mt-10">
+<div class="w-14 h-14 bg-primary rounded-2xl flex items-center justify-center shadow-[0_0_20px_rgba(0,192,199,0.4)] border-4 border-background-dark">
+<span class="material-symbols-outlined text-background-dark font-black text-2xl">bolt</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-1 group">
+<span class="material-symbols-outlined text-slate-500 group-hover:text-primary">bookmark</span>
+<span class="text-[9px] text-slate-500 font-bold tracking-tighter">SAVED</span>
+</div>
+<div class="flex flex-col items-center gap-1 group">
+<span class="material-symbols-outlined text-slate-500 group-hover:text-primary">account_circle</span>
+<span class="text-[9px] text-slate-500 font-bold tracking-tighter">CONNECT</span>
+</div>
+</nav>
+
+</body></html>
