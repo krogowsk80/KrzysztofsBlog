@@ -1,9 +1,11 @@
 # main links
 main:
-  - title: "Case Studies"
-    url: /case-studies/
+#  - title: "Industry News"
+#    url: /news/
   - title: "Insights Blog"
     url: /insights/
+  - title: "Case Studies"
+    url: /case-studies/
   - title: "Contact"
     url: /contact/
   - title: "About"

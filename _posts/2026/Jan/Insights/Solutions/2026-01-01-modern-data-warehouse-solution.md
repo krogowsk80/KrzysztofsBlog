@@ -5,12 +5,17 @@ description: >-
 date: 2026-01-01 09:00:00 -0500
 categories: [Insights Blog, Solutions]
 tags: [azure data factory, databricks, power bi, medallion architecture, data warehouse]
+header:
+  teaser: /assets/images/2026/Jan/DatabricksWithAzureAchitecture.png
 ---
 
-<!-- ![Databricks With Azure Architecture](/_img/posts/2025/Jan/2026-01-01-modern-data-warehouse-solution/DatabricksWithAzureAchitecture.jpg)
- -->
+
+![Modern Data Warehouse Solution with Medallion Architecture diagram](/assets/images/2026/Jan/DatabricksWithAzureAchitecture.png){: .align-center style="width: 60%;"}
+
 
 > Role: Solution Designer & Lead Developer
+
+<br>
 
 ## Overview
 
