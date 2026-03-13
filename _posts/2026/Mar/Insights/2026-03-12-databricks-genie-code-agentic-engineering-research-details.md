@@ -4,7 +4,7 @@ description: >-
   Discover Databricks Genie Code, an autonomous AI agent enabling 'agentic engineering' for data work. Learn how it streamlines data ingestion, transformation, and pipeline maintenance with Unity Catalog integration.
 date: 2026-03-12 09:00:00 -0500
 author: main_author
-categories: [Insights Blog]
+categories: [insights-blog]
 tags: [databricks, genie code, agentic engineering, ai, data engineering, unity catalog, data lifecycle, automation]
 words_per_minute: 200
 header:

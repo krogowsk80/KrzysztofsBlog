@@ -4,7 +4,7 @@ description: >-
   Explore Azure Databricks Lakebase, a managed, serverless PostgreSQL service that unifies operational data with the Lakehouse paradigm, accelerating real-time analytics and AI workloads.
 date: 2026-03-12 09:00:00 -0500
 author: main_author
-categories: [Insights Blog]
+categories: [insights-blog]
 tags: [azure, databricks, lakebase, postgresql, lakehouse, operational data, real-time analytics, ai, serverless]
 words_per_minute: 200
 header:

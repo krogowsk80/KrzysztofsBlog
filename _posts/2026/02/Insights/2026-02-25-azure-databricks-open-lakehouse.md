@@ -2,6 +2,7 @@
 title: "The Open Data Estate: Architecting Databricks on Azure for Strategic ROI"
 date: 2026-02-25
 author: Krzysztof
+categories: [insights-blog]
 tags: [Azure, Databricks, Data Engineering, Architecture, Microsoft Fabric]
 target_audience: Decision Makers, Technical Peers
 style_guide: Data-Engineering-Architecture

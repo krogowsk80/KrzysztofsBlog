@@ -4,7 +4,7 @@ description: >-
   A major social services department needed to modernize 20+ years of sensitive child-care data. I designed a resilient, decoupled architecture using Oracle GoldenGate, Azure Data Factory, and Databricks (Medallion Lakehouse) to bypass security bottlenecks. This project was the first to go to Production on Azure for the department, managing 646M+ records for 215+ users.
 date: 2026-01-01 09:00:00 -0500
 author: main_author
-categories: [Case Studies]
+categories: [case-studies]
 tags: [cloud migration, azure, databricks, security, architecture]
 words_per_minute: 100
 header:
