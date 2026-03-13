@@ -4,7 +4,7 @@ description: >-
   Discover practical strategies and best practices for managing data quality in ETL pipelines. Learn how to utilize data profiling, implement translation rules, integrate external APIs, and generate reports to ensure accurate and reliable data for your business.
 date: 2026-03-12 09:00:00 -0500
 author: main_author
-categories: [Insights Blog]
+categories: [insights-blog]
 tags: [data quality, ETL, databricks, data profiling, data governance]
 words_per_minute: 200
 header:

@@ -4,7 +4,7 @@ description: >-
   Explore Databricks' Agent Bricks, an intelligent knowledge assistant transforming enterprise data into actionable intelligence. Learn about its Instructed Retriever architecture, real-world applications, and strategic importance for accelerating AI adoption and enhancing decision-making in the lakehouse.
 date: 2026-03-08 09:00:00 -0500
 author: main_author
-categories: [Insights Blog]
+categories: [insights-blog]
 tags: [databricks, agent, knowledge assistant, ai, enterprise data, lakehouse, mlflow, azure]
 words_per_minute: 200
 header:

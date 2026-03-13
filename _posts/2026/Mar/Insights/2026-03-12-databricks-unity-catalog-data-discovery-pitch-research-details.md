@@ -4,7 +4,7 @@ description: >-
   Explore Databricks Unity Catalog's enhanced data discovery features, unifying data access and embedding business context to accelerate data and AI workflows with trust and governance at scale.
 date: 2026-03-12 09:00:00 -0500
 author: main_author
-categories: [Insights Blog]
+categories: [insights-blog]
 tags: [databricks, unity catalog, data discovery, business context, data governance, ai, lakehouse, data sprawl]
 words_per_minute: 200
 header:

@@ -4,7 +4,7 @@ description: >-
   Master the art of historical data tracking with Slowly Changing Dimensions (SCD Type 1 & Type 2). Learn battle-tested strategies for architecting scalable and performant SCD solutions in modern data platforms like Databricks and Redshift, ensuring unshakeable data integrity.
 date: 2026-03-12 09:00:00 -0500
 author: main_author
-categories: [Insights Blog]
+categories: [insights-blog]
 tags: [SCD, Slowly Changing Dimensions, Data Warehousing, Databricks, Redshift, ETL, Data Integrity]
 words_per_minute: 200
 header:

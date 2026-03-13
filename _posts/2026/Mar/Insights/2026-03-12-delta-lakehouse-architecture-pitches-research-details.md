@@ -4,7 +4,7 @@ description: >-
   Discover the Data Lakehouse Architecture, unifying data lakes and warehouses for AI-driven strategies. Learn about Delta Lake, Apache Iceberg, ACID transactions, and vector database integration for scalable data management.
 date: 2026-03-12 09:00:00 -0500
 author: main_author
-categories: [Insights Blog]
+categories: [insights-blog]
 tags: [data lakehouse, ai, data strategies, delta lake, apache iceberg, acid transactions, vector database, data management]
 words_per_minute: 200
 header:

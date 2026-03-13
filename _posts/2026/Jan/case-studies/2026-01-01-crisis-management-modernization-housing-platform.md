@@ -4,7 +4,7 @@ description: >-
   Two years into development, a high-visibility housing platform was failing. I led the turnaround, stabilizing the system in 3 months and re-engineering the architecture. I also secured the department’s first Azure POC by de-risking cloud adoption and introduced DevOps maturity, resulting in a successful provincial launch.
 date: 2026-01-01 09:00:00 -0500
 author: main_author
-categories: [Case Studies]
+categories: [case-studies]
 tags: [crisis management, modernization, azure, devops, public sector]
 words_per_minute: 200
 header:

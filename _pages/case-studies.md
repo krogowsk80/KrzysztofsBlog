@@ -12,7 +12,7 @@ classes: wide
 </div>
 
 <div class="insights-grid">
-{% for post in site.categories['Case Studies'] %}
+{% for post in site.categories['case-studies'] %}
   <div class="insight-card">
     <div class="insight-image-container">
       {% if post.header.teaser %}

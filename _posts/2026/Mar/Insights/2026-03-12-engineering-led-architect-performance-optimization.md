@@ -4,7 +4,7 @@ description: >-
   Master data lakehouse performance optimization. Learn how engineering-led architects cure bottlenecks through macro-level pipeline design and micro-level Spark, Delta Lake, partitioning, and Z-Ordering strategies for scalable and efficient data platforms.
 date: 2026-03-12 09:00:00 -0500
 author: main_author
-categories: [Insights Blog]
+categories: [insights-blog]
 tags: [Data Lakehouse, Performance Optimization, Spark, Delta Lake, ETL, Data Architecture, Z-Ordering, Partitioning]
 words_per_minute: 200
 header:

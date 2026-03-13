@@ -2,6 +2,7 @@
 title: "The Rise of the Data Intelligence Platform: Architecting Lakehouse AI for Scale"
 date: 2026-02-25
 author: Krzysztof
+categories: [insights-blog]
 tags: [Databricks, AI, Machine Learning, Lakehouse, Data Architecture]
 target_audience: Decision Makers, Technical Peers
 style_guide: Business-to-Business

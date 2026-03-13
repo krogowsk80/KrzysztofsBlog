@@ -4,7 +4,7 @@ description: >-
   Optimize your data warehouse with battle-tested Star Schema design principles. Learn to define fact and dimension tables, understand data grain, leverage partitioning for performance, and build summary facts for executive dashboards in modern data platforms.
 date: 2026-03-12 09:00:00 -0500
 author: main_author
-categories: [Insights Blog]
+categories: [insights-blog]
 tags: [Star Schema, Data Warehousing, Data Modeling, Fact Tables, Dimension Tables, Data Grain, Partitioning, ETL]
 words_per_minute: 200
 header:

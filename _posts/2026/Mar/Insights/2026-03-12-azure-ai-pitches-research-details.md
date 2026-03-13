@@ -4,7 +4,7 @@ description: >-
   Discover how Microsoft Azure AI is transforming telecommunications by driving significant ROI through a unified, trusted platform, agentic AI, and sovereign cloud solutions discussed at MWC 2026.
 date: 2026-03-12 09:00:00 -0500
 author: main_author
-categories: [Insights Blog]
+categories: [insights-blog]
 tags: [azure, ai, telecommunications, roi, unified platform, agentic ai, sovereign cloud, mwc 2026]
 words_per_minute: 200
 header:
