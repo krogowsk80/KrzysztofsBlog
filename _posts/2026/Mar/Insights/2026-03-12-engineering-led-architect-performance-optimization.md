@@ -8,7 +8,7 @@ categories: [insights-blog]
 tags: [Data Lakehouse, Performance Optimization, Spark, Delta Lake, ETL, Data Architecture, Z-Ordering, Partitioning]
 words_per_minute: 200
 header:
-  teaser: /assets/images/2026/Mar/engineering-led-architect-performance-optimization.png
+  teaser: /assets/images/2026/Mar/EngineeringLed-Architect-PerformanceOptimization.png
 ---
 # The Engineering-Led Architect
 
@@ -60,8 +60,6 @@ In a Delta Lake/Databricks environment, MERGE statements are powerful but comput
 
 I found processes that were executing multiple MERGE statements against the same target table within a single run (e.g., merging new inserts, then running a separate merge to update SCD Type 2 expirations). I refactored these into single, unified MERGE operations utilizing complex WHEN MATCHED and WHEN NOT MATCHED clauses. Halving the number of target table scans yielded massive I/O savings.
 
-![Alt Text: Screenshot of a Spark UI DAG execution plan, highlighting expensive Exchange and Sort operations associated with poorly optimized MERGE statements, contrasted with an optimized, cached execution plan.]()
-
 ### Strategic Caching and DAG Optimization
 
 In complex Gold layer transformations, intermediate datasets are often referenced multiple times (e.g., joining a staging table to three different dimension tables). I optimized the Spark Directed Acyclic Graphs (DAGs) by strategically injecting df.cache() for DataFrames that were reused across multiple downstream actions. This prevented the cluster from recalculating the source extraction and initial transformations multiple times.
@@ -74,4 +72,5 @@ As I discussed in my previous post on Star Schemas, a model that looks perfect o
 
 For the largest Fact tables, query optimization requires aggressive partition pruning. However, over-partitioning can lead to the “small file problem” in cloud storage. We established a strict partitioning strategy based on the Month_ID, ensuring file sizes remained optimal. For high-cardinality columns frequently used in WHERE clauses by the BI layer (like Client_ID), we implemented Z-Ordering (multi-dimensional clustering) on the Delta tables. This allowed the Databricks engine to skip massive amounts of irrelevant data files during query execution, directly accelerating the final reporting dashboards.
 
-## Conclusion: The Holistic View\n\nOptimizing a modern data platform is a balancing act. If your Gold layer models are bloated with redundant strings, your queries will crawl. If your MERGE statements are poorly written, your clusters will burn unnecessary compute credits. But even with perfect code and perfect models, a synchronous, poorly designed ingestion pipeline will cause you to miss your SLAs.\n\nA successful Data Architect doesn’t just write SQL; they design the entire ecosystem. They ensure the data flows smoothly from the source, lands cleanly in the Lakehouse, and is modeled aggressively for the exact realities of the consumption layer. By optimizing both the macro-flow and the micro-code, we ultimately gave the business its data back before 8:00 AM every single day.
+## Conclusion: 
+The Holistic View\n\nOptimizing a modern data platform is a balancing act. If your Gold layer models are bloated with redundant strings, your queries will crawl. If your MERGE statements are poorly written, your clusters will burn unnecessary compute credits. But even with perfect code and perfect models, a synchronous, poorly designed ingestion pipeline will cause you to miss your SLAs.\n\nA successful Data Architect doesn’t just write SQL; they design the entire ecosystem. They ensure the data flows smoothly from the source, lands cleanly in the Lakehouse, and is modeled aggressively for the exact realities of the consumption layer. By optimizing both the macro-flow and the micro-code, we ultimately gave the business its data back before 8:00 AM every single day.

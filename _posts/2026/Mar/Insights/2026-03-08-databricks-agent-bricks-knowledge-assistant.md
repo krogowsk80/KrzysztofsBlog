@@ -8,12 +8,12 @@ categories: [insights-blog]
 tags: [databricks, agent, knowledge assistant, ai, enterprise data, lakehouse, mlflow, azure]
 words_per_minute: 200
 header:
-  teaser: /assets/images/2026/Mar/databricks_agent_bricks_knowledge_assistant.png
+  teaser: /assets/images/2026/Mar/Databricks-Agent-Bricks-for-Intelligent-Assistance.png
 ---
 
 # Unlocking Enterprise Knowledge: A Deep Dive into Databricks' Agent Bricks for Intelligent Assistance
 
-![Suggested: A stylized graphic depicting an AI agent interacting with a complex web of enterprise data, possibly with glowing nodes representing knowledge and connections, set against a modern, clean interface.]()
+![Alt Text: A stylized graphic depicting an AI agent interacting with a complex web of enterprise data, possibly with glowing nodes representing knowledge and connections, set against a modern, clean interface.](/assets/images/2026/Mar/Databricks-Agent-Bricks-for-Intelligent-Assistance.png)
 
 As an independent Senior Data Consultant, I constantly observe the evolving landscape of data and AI. A particularly significant development is the emergence of intelligent agents, and Databricks' introduction of Agent Bricks as a knowledge assistant marks a pivotal moment in this evolution. This deep dive explores the strategic implications, technical underpinnings, and real-world impact of Agent Bricks, positioning it as a crucial component for organizations aiming to operationalize their enterprise knowledge and accelerate AI adoption.
 

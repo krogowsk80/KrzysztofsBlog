@@ -8,7 +8,7 @@ categories: [insights-blog]
 tags: [Star Schema, Data Warehousing, Data Modeling, Fact Tables, Dimension Tables, Data Grain, Partitioning, ETL]
 words_per_minute: 200
 header:
-  teaser: /assets/images/2026/Mar/star-schema-design.png
+  teaser: /assets/images/2026/Mar/StarSchemaDesign.png
 ---
 # Star Schema Design—Fact, Dimension, and Grain Decisions at Scale
 
@@ -20,7 +20,7 @@ Over the last 13 years, I’ve architected data platforms across government, ban
 
 Here is my playbook for designing dimension and fact tables that actually perform in the real world.
 
-![Alt Text: A clear, modern illustration of a Star Schema with a central fact table and radiating dimension tables, emphasizing the connections.]()
+![Alt Text: A clear, modern illustration of a Star Schema with a central fact table and radiating dimension tables, emphasizing the connections.](/assets/images/2026/Mar/StarSchemaDesign.png)
 
 ## Dimensions: Keep it Flat, Avoid the Snowflake
 

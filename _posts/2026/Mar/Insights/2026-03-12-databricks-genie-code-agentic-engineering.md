@@ -8,12 +8,12 @@ categories: [insights-blog]
 tags: [databricks, genie code, agentic engineering, ai, data engineering, unity catalog, data lifecycle, automation]
 words_per_minute: 200
 header:
-  teaser: /assets/images/2026/Mar/databricks_genie_code.png
+  teaser: /assets/images/2026/Mar/FoundationForAIDrivenDataStrategies.png
 ---
 
 # Databricks Genie Code: Agentic Engineering for Data Work
 
-![Alt Text: Abstract illustration of Databricks Genie Code (AI agent) streamlining data engineering workflows with Unity Catalog]()
+![Alt Text: Abstract illustration of Databricks Genie Code (AI agent) streamlining data engineering workflows with Unity Catalog](/assets/images/2026/Mar/FoundationForAIDrivenDataStrategies.png)
 
 In the ever-accelerating world of data and AI, the demand for timely insights often outpaces the capacity of even the most skilled data engineering teams. The complexities of data ingestion, transformation, quality, and pipeline maintenance present significant bottlenecks, hindering innovation and delaying strategic initiatives. Databricks' introduction of **Genie Code** heralds a transformative shift towards "agentic engineering," an approach where autonomous AI agents fundamentally redefine how data work is conceived, executed, and maintained. This innovation is not merely an automation tool; it’s a strategic partner designed to democratize data access, accelerate the data lifecycle, and unlock unprecedented efficiency across the enterprise.
 

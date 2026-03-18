@@ -8,13 +8,13 @@ categories: [insights-blog]
 tags: [data quality, ETL, databricks, data profiling, data governance]
 words_per_minute: 200
 header:
-  teaser: /assets/images/2026/Mar/databricks_handle_data_quality.png
+  teaser: /assets/images/2026/Mar/DatabricksDataQualityResolutionProcess.png
 ---
 # An approach to handling Data Quality in ETL Pipelines: Practices and Strategies
 
 In today's data-driven world, the success of any initiative hinges on the quality of its data. Accurate, complete, and reliable data is paramount for effective analytics, informed decision-making, and seamless operational processes. This article presents a robust approach to proactively address and resolve common data quality issues, such as invalid city names, missing or incorrect postal codes, and inconsistent field values, directly within modern ETL pipelines. While third-party data quality utilities offer valuable solutions, this guide focuses on implementing an internal, customizable framework that aligns with your organization's specific guidelines and best practices.
 
-![Alt Text: Abstract illustration of data flowing through quality checks and transformations in an ETL pipeline.]()
+![Alt Text: Abstract illustration of data flowing through quality checks and transformations in an ETL pipeline.](/assets/images/2026/Mar/DatabricksDataQualityResolutionProcess.png)
 
 ## 1. Utilize Data Profiling to Identify Issues
 
@@ -76,7 +76,7 @@ df_dq_rules = spark.createDataFrame(rules_data, schema=rules_schema)
 
 ## 3. Integrate Data Quality Rules into ETL Processes
 
-Incorporate the data quality translation rules as a step in your ETL pipeline. Load original data rows into a staging table and apply corrections in subsequent processing.\n
+Incorporate the data quality translation rules as a step in your ETL pipeline. Load original data rows into a staging table and apply corrections in subsequent processing.
 Eg. An example to apply translation
 
 def translate_DQ_rule(dfSrc:DataFrame, strSrcColumn:str, dfDQTranslation:DataFrame):
@@ -92,48 +92,48 @@ def translate_DQ_rule(dfSrc:DataFrame, strSrcColumn:str, dfDQTranslation:DataFra
     """
     ## Apply translation
     return dfSrc
-### Recommended practice:\n
-Apply corrections as Type 2 Slowly Changing Dimensions (SCD) to preserve the original row and track changes. This approach ensures a complete audit trail of both raw and corrected data.\n
+### Recommended practice:
+Apply corrections as Type 2 Slowly Changing Dimensions (SCD) to preserve the original row and track changes. This approach ensures a complete audit trail of both raw and corrected data.
 
-Any data quality transformations should be placed in a separate library file with other user defined functions(UDFs) so that they can be shared with other notebook or projects.\n
+Any data quality transformations should be placed in a separate library file with other user defined functions(UDFs) so that they can be shared with other notebook or projects.
 
-Eg. you can import a library notebook via:\n
+Eg. you can import a library notebook via:
 
-%run ../../libs/nt_library_DataQuality\n
+%run ../../libs/nt_library_DataQuality
 
-## 4. Track Data Quality Issues\n
+## 4. Track Data Quality Issues
 
-Enhance the ETL process to log every data quality issue detected during loading. Maintain detailed records or generate summary reports showing the number of issues per field.\n
+Enhance the ETL process to log every data quality issue detected during loading. Maintain detailed records or generate summary reports showing the number of issues per field.
 
-### Benefits:\n
+### Benefits:
 
-- Provides transparency into the health of your dataset.\n
+- Provides transparency into the health of your dataset.
 
-- Identifies recurring issues that need systemic fixes (e.g., data entry errors).\n
+- Identifies recurring issues that need systemic fixes (e.g., data entry errors).
 
-## 5. Generate Data Quality Reports\n
+## 5. Generate Data Quality Reports
 
-Set up regular reporting on key data quality metrics, including:\n
+Set up regular reporting on key data quality metrics, including:
 
-- The number of corrections applied by field.\n
+- The number of corrections applied by field.
 
-- Trends in data quality over time.\n
+- Trends in data quality over time.
 
-- New or unexpected values in categorical columns.\n
+- New or unexpected values in categorical columns.
 
-These reports empower teams to monitor improvements and address emerging problems.\n
+These reports empower teams to monitor improvements and address emerging problems.
 
-## 6. Leverage External APIs for Advanced Corrections\n
+## 6. Leverage External APIs for Advanced Corrections
 
-For fields like addresses, enrich your data with external APIs. For instance, a postal service API can validate and correct addresses based on authoritative databases.\n
+For fields like addresses, enrich your data with external APIs. For instance, a postal service API can validate and correct addresses based on authoritative databases.
 
-### Best practices:\n
+### Best practices:
 
-- Maintain a mapping of API corrections for review and approval to prevent overcorrection.\n
+- Maintain a mapping of API corrections for review and approval to prevent overcorrection.
 
-- Use APIs selectively for high-value data fields to balance cost and quality.\n
+- Use APIs selectively for high-value data fields to balance cost and quality.
 
-### Example Workflow for Address Validation\n
+### Example Workflow for Address Validation
 
 - Original Data: Load raw records into a staging table.
 
@@ -146,4 +146,6 @@ For fields like addresses, enrich your data with external APIs. For instance, a 
 - Apply Corrections: Update data as a Type 2 change in the main table.
 
 
-## Conclusion\n\nHandling data quality issues requires a structured, scalable approach. By leveraging data profiling, rule-based transformations, external APIs, and detailed reporting, organizations can improve the accuracy and reliability of their datasets.\n\nWith these steps integrated into your ETL pipeline, you’ll be well-equipped to tackle even the most complex data quality challenges, driving better insights and business outcomes.\n\nWhat strategies have you implemented for managing data quality in your pipelines? Share your thoughts below!\n
+## Conclusion
+
+Handling data quality issues requires a structured, scalable approach. By leveraging data profiling, rule-based transformations, external APIs, and detailed reporting, organizations can improve the accuracy and reliability of their datasets.With these steps integrated into your ETL pipeline, you’ll be well-equipped to tackle even the most complex data quality challenges, driving better insights and business outcomes.What strategies have you implemented for managing data quality in your pipelines? Share your thoughts below!
