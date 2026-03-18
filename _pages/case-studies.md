@@ -2,8 +2,9 @@
 layout: single
 title: ""
 permalink: /case-studies/
-author_profile: true
+#author_profile: true
 classes: wide
+
 ---
 
 <div class="insights-header">
@@ -12,7 +13,7 @@ classes: wide
 </div>
 
 <div class="insights-grid">
-{% for post in site.categories['Case Studies'] %}
+{% for post in site.categories['case-studies'] %}
   <div class="insight-card">
     <div class="insight-image-container">
       {% if post.header.teaser %}

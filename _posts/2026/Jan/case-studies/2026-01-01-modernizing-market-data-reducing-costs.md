@@ -4,9 +4,10 @@ description: >-
   The client faced high costs (over $10k/month) and unreliable market data. I implemented a Modern Databricks Medallion Architecture, introducing CI/CD, modular engineering, and unified data streams. This resulted in ~85% infrastructure savings and reliable board-level analytics.
 date: 2026-01-01 09:00:00 -0500
 author: main_author
-categories: [Case Studies]
+categories: [case-studies]
 tags: [databricks, cost optimization, ci/cd, architecture, retail]
 words_per_minute: 200
+toc: true
 header:
   teaser: /assets/images/2026/Jan/modernizing_market_data.png
 ---

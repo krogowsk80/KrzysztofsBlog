@@ -6,13 +6,17 @@ main:
     url: /insights/
   - title: "Case Studies"
     url: /case-studies/
+#  - title: "All Posts"
+#    url: /all-posts/
   - title: "Contact"
     url: /contact/
   - title: "About"
     url: /about/
+  #- title: "Search"
+  #  url: /search/
   # - title: "Sample Posts"
   #   url: /year-archive/
-  # - title: "Sample Collections"
-  #   url: /collection-archive/
-  # - title: "Sitemap"
-  #   url: /sitemap/
+  #- title: "Sample Collections"
+  #  url: /collection-archive/
+  #- title: "Sitemap"
+  #  url: /sitemap/

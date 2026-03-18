@@ -2,7 +2,7 @@
 layout: single
 title: ""
 permalink: /insights/
-author_profile: true
+#author_profile: true
 classes: wide
 ---
 
@@ -12,7 +12,7 @@ classes: wide
 </div>
 
 <div class="insights-grid">
-{% for post in site.categories['Insights Blog'] %}
+{% for post in site.categories['insights-blog'] %}
   <div class="insight-card">
     <div class="insight-image-container">
       {% if post.header.teaser %}

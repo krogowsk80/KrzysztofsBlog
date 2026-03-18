@@ -4,16 +4,17 @@ description: >-
   Explore Databricks Unity Catalog's enhanced data discovery features, unifying data access and embedding business context to accelerate data and AI workflows with trust and governance at scale.
 date: 2026-03-12 09:00:00 -0500
 author: main_author
-categories: [Insights Blog]
+categories: [insights-blog]
 tags: [databricks, unity catalog, data discovery, business context, data governance, ai, lakehouse, data sprawl]
 words_per_minute: 200
+toc: true
 header:
-  teaser: /assets/images/2026/Mar/databricks_unity_catalog_data_discovery.png
+  teaser: /assets/images/2026/Mar/DataDiscoveryDatabricksUnityCatalog.png
 ---
 
 # Databricks Unity Catalog's Enhanced Data Discovery: Unlocking Business Context and Trust at Scale
 
-![Alt Text: Illustration of Databricks Unity Catalog centralizing and enhancing data discovery with business context and trust]()
+![Alt Text: Illustration of Databricks Unity Catalog centralizing and enhancing data discovery with business context and trust](/assets/images/2026/Mar/DataDiscoveryDatabricksUnityCatalog.png)
 
 In the era of data-driven decision-making, the sheer volume and diversity of enterprise data have become both a tremendous asset and a formidable challenge. Organizations often grapple with "data sprawl," where valuable data assets are scattered across disparate systems, difficult to find, and lack the essential business context necessary for effective utilization. Databricks has taken a significant leap forward in addressing these challenges with the substantial enhancements to its **Unity Catalog**, introducing a new "Discover" experience meticulously designed to unify data discovery and embed critical business context for enterprises operating at scale. This evolution is transforming how companies access, understand, and govern their data, fostering a culture of trust and accelerating data and AI workflows.
 

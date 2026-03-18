@@ -193,6 +193,7 @@ exclude:
   - /docs # ignore Minimal Mistakes /docs
   - /test # ignore Minimal Mistakes /test
   - /design
+  - /archive
 keep_files:
   - .git
   - .svn
@@ -314,6 +315,10 @@ compress_html:
 # Defaults
 defaults:
   # _posts
+  - scope:
+      path: "tags" # or any path giving you trouble
+    values:
+      sitemap: false
   - scope:
       path: ""
       type: posts
