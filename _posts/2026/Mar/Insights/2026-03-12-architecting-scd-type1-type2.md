@@ -7,6 +7,7 @@ author: main_author
 categories: [insights-blog]
 tags: [SCD, Slowly Changing Dimensions, Data Warehousing, Databricks, Redshift, ETL, Data Integrity]
 words_per_minute: 200
+toc: true
 header:
   teaser: /assets/images/2026/Mar/Type1Typ2_SCD.png
 ---

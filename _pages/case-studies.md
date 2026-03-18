@@ -2,8 +2,9 @@
 layout: single
 title: ""
 permalink: /case-studies/
-author_profile: true
+#author_profile: true
 classes: wide
+
 ---
 
 <div class="insights-header">

@@ -7,6 +7,7 @@ author: main_author
 categories: [case-studies]
 tags: [databricks, cost optimization, ci/cd, architecture, retail]
 words_per_minute: 200
+toc: true
 header:
   teaser: /assets/images/2026/Jan/modernizing_market_data.png
 ---

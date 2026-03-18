@@ -7,6 +7,7 @@ author: main_author
 categories: [insights-blog]
 tags: [data lakehouse, ai, data strategies, delta lake, apache iceberg, acid transactions, vector database, data management]
 words_per_minute: 200
+toc: true
 header:
   teaser: /assets/images/2026/Mar/FoundationForAIDrivenDataStrategies.png
 ---

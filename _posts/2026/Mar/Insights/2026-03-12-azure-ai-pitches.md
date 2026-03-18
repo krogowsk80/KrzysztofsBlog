@@ -7,6 +7,7 @@ author: main_author
 categories: [insights-blog]
 tags: [azure, ai, telecommunications, roi, unified platform, agentic ai, sovereign cloud, mwc 2026]
 words_per_minute: 200
+toc: true
 header:
   teaser: /assets/images/2026/Mar/Databricks-Agent-Bricks-for-Intelligent-Assistance.png
 ---

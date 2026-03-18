@@ -7,6 +7,7 @@ author: main_author
 categories: [case-studies]
 tags: [cloud migration, azure, databricks, security, architecture]
 words_per_minute: 100
+toc: true
 header:
   teaser: /assets/images/2026/Jan/architecting_security_first_cloud_migration.png
 ---

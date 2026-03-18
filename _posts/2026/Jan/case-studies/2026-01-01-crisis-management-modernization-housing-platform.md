@@ -7,6 +7,7 @@ author: main_author
 categories: [case-studies]
 tags: [crisis management, modernization, azure, devops, public sector]
 words_per_minute: 200
+toc: true
 header:
   teaser: /assets/images/2026/Jan/crisis_management_modernization.png
 ---
