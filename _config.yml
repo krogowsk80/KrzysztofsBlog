@@ -193,6 +193,7 @@ exclude:
   - /docs # ignore Minimal Mistakes /docs
   - /test # ignore Minimal Mistakes /test
   - /design
+  - /archive
 keep_files:
   - .git
   - .svn

@@ -7,6 +7,7 @@ author: main_author
 categories: [insights-blog]
 tags: [Star Schema, Data Warehousing, Data Modeling, Fact Tables, Dimension Tables, Data Grain, Partitioning, ETL]
 words_per_minute: 200
+toc: true
 header:
   teaser: /assets/images/2026/Mar/StarSchemaDesign.png
 ---

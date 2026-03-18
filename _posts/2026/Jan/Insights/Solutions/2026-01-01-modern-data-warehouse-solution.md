@@ -5,6 +5,7 @@ description: >-
 date: 2026-01-01 09:00:00 -0500
 categories: [insights-blog, solutions]
 tags: [azure data factory, databricks, power bi, medallion architecture, data warehouse]
+toc: true
 header:
   teaser: /assets/images/2026/Jan/DatabricksWithAzureAchitecture.png
 ---

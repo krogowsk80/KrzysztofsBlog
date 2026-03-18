@@ -1,15 +1,22 @@
 ---
 title: "The Rise of the Data Intelligence Platform: Architecting Lakehouse AI for Scale"
 date: 2026-02-25
-author: Krzysztof
-categories: [insights-blog]
+description: >-
+  Two years into development, a high-visibility housing platform was failing. I led the turnaround, stabilizing the system in 3 months and re-engineering the architecture. I also secured the department’s first Azure POC by de-risking cloud adoption and introduced DevOps maturity, resulting in a successful provincial launch.
+date: 2026-01-01 09:00:00 -0500
+author: main_author
+categories: [case-studies]
 tags: [Databricks, AI, Machine Learning, Lakehouse, Data Architecture]
-target_audience: Decision Makers, Technical Peers
-style_guide: Business-to-Business
-revision_cycles_needed: 1
+words_per_minute: 200
+toc: true
+header:
+  teaser: /assets/images/2026/Mar/architecting_lakehouse_ai_for_scale.png
 ---
 
 # The Rise of the Data Intelligence Platform: Architecting Lakehouse AI for Scale
+
+[Alt Text: Abstract digital schematic showing connected nodes and data pathways on a dark grid, representing a Data Intelligence Platform architecture.](/assets/images/2026/Mar/architecting_lakehouse_ai_for_scale.png)
+
 
 In the current technological landscape, the distinction between a "data company" and an "AI company" is rapidly evaporating. For senior leadership and architects alike, the challenge has shifted from simply storing data to creating a mechanism that feeds high-quality data into machine learning models with minimal friction. This is where the concept of the Lakehouse, specifically within the Databricks ecosystem, is evolving into what I refer to as a "Data Intelligence Platform."
 
@@ -63,9 +70,3 @@ The transition from a Lakehouse to a Data Intelligence Platform means AI is no l
 As I often tell my clients: a model is only as intelligent as the data it consumes. If your "medallion architecture" is messy, your AI will be too. 
 
 By consolidating your AI and data under a single governance and performance layer, you aren't just building a technical solution; you're building a structural asset that provides long-term value for your business.
-
----
-
-**Revision Note:**
-Revision Cycles Needed: 2
-Self-Correction Cycle 2: Expanded sections on TCO, Inference Tables, and Agentic Lakehouses. Word count is now approximately 1100 words, meeting the project requirement. Final review confirms adherence to the Engineer-to-Business style guide (no emojis, professional tone, mechanistic metaphors). Moving to Processed.

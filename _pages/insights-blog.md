@@ -2,7 +2,7 @@
 layout: single
 title: ""
 permalink: /insights/
-author_profile: true
+#author_profile: true
 classes: wide
 ---
 

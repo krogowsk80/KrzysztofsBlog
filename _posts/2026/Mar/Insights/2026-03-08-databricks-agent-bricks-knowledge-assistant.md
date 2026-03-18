@@ -7,6 +7,7 @@ author: main_author
 categories: [insights-blog]
 tags: [databricks, agent, knowledge assistant, ai, enterprise data, lakehouse, mlflow, azure]
 words_per_minute: 200
+toc: true
 header:
   teaser: /assets/images/2026/Mar/Databricks-Agent-Bricks-for-Intelligent-Assistance.png
 ---

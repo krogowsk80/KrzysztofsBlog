@@ -7,6 +7,7 @@ author: main_author
 categories: [insights-blog]
 tags: [data quality, ETL, databricks, data profiling, data governance]
 words_per_minute: 200
+toc: true
 header:
   teaser: /assets/images/2026/Mar/DatabricksDataQualityResolutionProcess.png
 ---

@@ -7,6 +7,7 @@ author: main_author
 categories: [insights-blog]
 tags: [azure, databricks, lakebase, postgresql, lakehouse, operational data, real-time analytics, ai, serverless]
 words_per_minute: 200
+toc: true
 header:
   teaser: /assets/images/2026/Mar/EngineeringLed-Architect-PerformanceOptimization.png
 ---

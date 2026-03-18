@@ -7,6 +7,7 @@ author: main_author
 categories: [insights-blog]
 tags: [Data Lakehouse, Performance Optimization, Spark, Delta Lake, ETL, Data Architecture, Z-Ordering, Partitioning]
 words_per_minute: 200
+toc: true
 header:
   teaser: /assets/images/2026/Mar/EngineeringLed-Architect-PerformanceOptimization.png
 ---

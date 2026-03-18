@@ -7,6 +7,7 @@ author: main_author
 categories: [insights-blog]
 tags: [databricks, genie code, agentic engineering, ai, data engineering, unity catalog, data lifecycle, automation]
 words_per_minute: 200
+toc: true
 header:
   teaser: /assets/images/2026/Mar/FoundationForAIDrivenDataStrategies.png
 ---
