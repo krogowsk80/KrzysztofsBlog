@@ -8,12 +8,12 @@ categories: [insights-blog]
 tags: [azure, databricks, lakebase, postgresql, lakehouse, operational data, real-time analytics, ai, serverless]
 words_per_minute: 200
 header:
-  teaser: /assets/images/2026/Mar/azure_databricks_lakebase.png
+  teaser: /assets/images/2026/Mar/EngineeringLed-Architect-PerformanceOptimization.png
 ---
 
 # Azure Databricks Lakebase: Unifying Operational Data with the Lakehouse
 
-![Alt Text: Conceptual illustration of Azure Databricks Lakebase unifying transactional and analytical data in a Lakehouse architecture]()
+![Alt Text: Conceptual illustration of Azure Databricks Lakebase unifying transactional and analytical data in a Lakehouse architecture](/assets/images/2026/Mar/EngineeringLed-Architect-PerformanceOptimization.png)
 
 The modern enterprise data landscape is increasingly complex, often characterized by a dichotomy between transactional databases and analytical data lakes. This separation, while historically necessary, has led to significant challenges: data silos, redundant data movement, and the inherent latency in deriving insights from operational activities. Azure Databricks' introduction of **Lakebase** represents a pivotal innovation designed to collapse this architectural divide, offering a managed, serverless PostgreSQL service specifically engineered for operational data within the unified Lakehouse paradigm. This evolution is not merely incremental; it redefines how organizations can leverage their most critical asset—data—for real-time operations, analytics, and AI.
 

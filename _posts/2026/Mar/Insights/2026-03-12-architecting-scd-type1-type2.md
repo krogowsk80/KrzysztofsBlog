@@ -8,7 +8,7 @@ categories: [insights-blog]
 tags: [SCD, Slowly Changing Dimensions, Data Warehousing, Databricks, Redshift, ETL, Data Integrity]
 words_per_minute: 200
 header:
-  teaser: /assets/images/2026/Mar/architecting-scd-type1-type2.png
+  teaser: /assets/images/2026/Mar/Type1Typ2_SCD.png
 ---
 # Architecting Slowly Changing Dimensions (SCD Type 1 & Type 2) for Modern Data Platforms
 
@@ -20,7 +20,7 @@ This brings us to the core of data warehousing methodology: Slowly Changing Dime
 
 Here is a deep dive into how I architect these solutions for scale, performance, and unshakeable data integrity.
 
-![Alt Text: Abstract illustration of data evolving through time, with layers representing Slowly Changing Dimensions (SCD) Type 1 and Type 2.]()
+![Alt Text: Flowchart detailing the decision logic for handling new records, Type 1 changes, Type 2 changes, and soft deletes in a dimension table.](/assets/images/2026/Mar/Type1Typ2_SCD.png){: .align-center}
 
 ## The Core Philosophy: What Needs to be Tracked?
 
@@ -78,5 +78,34 @@ If the incoming data shows a change only to a Type 1 attribute (e.g., the first 
 
 If the incoming data shows a change to a Type 2 attribute (e.g., the street address), the engine must perform a precise surgical operation:
 
-Expire the Existing Record: We take the currently active record (where record_end_effective_dt is 9999-12-30) and update its end date to the exact time the change occurred in the source system. The Architect’s Secret: To prevent overlapping timelines and ensure that a “BETWEEN” SQL query doesn’t accidentally pull two records for the exact same millisecond, I apply a slight offset to the expiration date. Typically, I subtract 0.0001 nanoseconds (NS) from the change date.\n\nInsert the New Record: We insert the new row with the updated address. The record_start_effective_dt is set to the exact time the change occurred in the source system, and the record_end_effective_dt is set to 9999-12-30.\n\nUpdate Indicators: The old record’s current_ind is flipped to indicate it is historical, and the new record’s current_ind is set to active.\n\n## Real-World “Gotchas” and Edge Cases\n\nIn a perfect world, the logic above runs flawlessly. However, in enterprise environments, the world is rarely perfect. Here are two massive edge cases you must architect for:\n\n### 1. The Time Zone Consideration\n
-Data does not respect geography. If your source system is a legacy application running in the Toronto time zone (EST/EDT) but your target data warehouse is configured to UTC, a change that happens at 10:00 PM in Toronto actually happens at 2:00 AM the next day in UTC.\n\nIf you do not explicitly handle time zone conversions during your SCD processing, your record_start_effective_dt will drift, leading to mismatched joins with fact tables. Special considerations and explicit casting to UTC must be handled at the ingestion layer before the SCD merge logic ever fires.\n\n### 2. Handling Deletes at Source via Soft Deletes\n\nWhat happens when a record is deleted in the source system? Hard deleting data in a data warehouse is generally an architectural sin. We need to preserve the history, but ensure the BI layer knows the entity no longer exists in the operational system.\n\nI typically handle soft deletes using one of two methods, depending on the constraints of the consumption layer:\n\n- The Multi-State Flag: I use the current_flag as a small integer to track state. 1 means the record is current and active. 2 means the record is a historical (past) Type 2 version. 3 means the record has been soft-deleted at the source.\n\n- The Explicit Indicator: Alternatively, if the reporting layer requires simpler boolean logic, I will add a dedicated deleted_ind column. In this scenario, when a delete is detected, the current_ind remains 1 (because it is technically the most current state of that record), but the deleted_ind is set to true.\n\n## Conclusion\n\nData modeling is not just about drawing boxes and lines; it is about writing the rules of reality for your organization’s history. By implementing rigorous, defensively designed SCD Type 1 and Type 2 logic—accounting for microsecond overlaps, time zone drifts, and soft deletes—you build a foundation that analysts and data scientists can actually trust.\n\nIn the next post, I will be breaking down how these dimension tables interact with massive, 200-million-row fact tables, and the architectural decisions behind designing highly performant Star Schemas.\n
+Expire the Existing Record: We take the currently active record (where record_end_effective_dt is 9999-12-30) and update its end date to the exact time the change occurred in the source system. The Architect’s Secret: To prevent overlapping timelines and ensure that a “BETWEEN” SQL query doesn’t accidentally pull two records for the exact same millisecond, I apply a slight offset to the expiration date. Typically, I subtract 0.0001 nanoseconds (NS) from the change date.
+
+Insert the New Record: We insert the new row with the updated address. The record_start_effective_dt is set to the exact time the change occurred in the source system, and the record_end_effective_dt is set to 9999-12-30.
+
+Update Indicators: The old record’s current_ind is flipped to indicate it is historical, and the new record’s current_ind is set to active.
+
+## Real-World “Gotchas” and Edge Cases
+
+In a perfect world, the logic above runs flawlessly. However, in enterprise environments, the world is rarely perfect. Here are two massive edge cases you must architect for:
+
+### 1. The Time Zone Consideration
+
+Data does not respect geography. If your source system is a legacy application running in the Toronto time zone (EST/EDT) but your target data warehouse is configured to UTC, a change that happens at 10:00 PM in Toronto actually happens at 2:00 AM the next day in UTC.
+
+If you do not explicitly handle time zone conversions during your SCD processing, your record_start_effective_dt will drift, leading to mismatched joins with fact tables. Special considerations and explicit casting to UTC must be handled at the ingestion layer before the SCD merge logic ever fires.
+
+### 2. Handling Deletes at Source via Soft Deletes
+
+What happens when a record is deleted in the source system? Hard deleting data in a data warehouse is generally an architectural sin. We need to preserve the history, but ensure the BI layer knows the entity no longer exists in the operational system.
+
+I typically handle soft deletes using one of two methods, depending on the constraints of the consumption layer:
+
+- The Multi-State Flag: I use the current_flag as a small integer to track state. 1 means the record is current and active. 2 means the record is a historical (past) Type 2 version. 3 means the record has been soft-deleted at the source.
+
+- The Explicit Indicator: Alternatively, if the reporting layer requires simpler boolean logic, I will add a dedicated deleted_ind column. In this scenario, when a delete is detected, the current_ind remains 1 (because it is technically the most current state of that record), but the deleted_ind is set to true.
+
+## Conclusion
+
+Data modeling is not just about drawing boxes and lines; it is about writing the rules of reality for your organization’s history. By implementing rigorous, defensively designed SCD Type 1 and Type 2 logic—accounting for microsecond overlaps, time zone drifts, and soft deletes—you build a foundation that analysts and data scientists can actually trust.
+
+In the next post, I will be breaking down how these dimension tables interact with massive, 200-million-row fact tables, and the architectural decisions behind designing highly performant Star Schemas.
