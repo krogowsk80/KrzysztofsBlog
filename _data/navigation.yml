@@ -2,10 +2,21 @@
 main:
 #  - title: "Industry News"
 #    url: /news/
-  - title: "Insights Blog"
-    url: /insights/
-  - title: "Case Studies"
-    url: /case-studies/
+  - title: "Garden Blog"
+    url: /garden-blog/
+  - title: "Cooking Blog"
+    url: /cooking-blog/
+    children:
+      - title: "Salads"
+        url: /cooking-blog/salads/
+      - title: "Teas"
+        url: /cooking-blog/teas/
+      - title: "Dinners"
+        url: /cooking-blog/dinners/
+      - title: "Lunch"
+        url: /cooking-blog/lunch/
+      - title: "Breakfast"
+        url: /cooking-blog/breakfast/
 #  - title: "All Posts"
 #    url: /all-posts/
   - title: "Contact"

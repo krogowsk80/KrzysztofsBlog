@@ -17,12 +17,12 @@ minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt"
 # Site Settings
 locale                   : "en-US"
 rtl                      : # true, false (default) # turns direction of the page into right to left for RTL languages
-title                    : "Data Dive Craft" 
+title                    : "Harvest 2 Cook" 
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Your Name"
 description              : "Strategic data architecture, high-performance engineering and production-grade design with Augentic AI"
-url                      : "https://www.datadivecraft.com" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
+url                      : "https://www.harvest2cook.com" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : "/assets/images/Generic_Post.jpeg" # path of fallback teaser image, e.g. "/assets/images/500x300.png"

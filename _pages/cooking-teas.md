@@ -1,21 +1,21 @@
 ---
 layout: single
 title: ""
-permalink: /insights/
+permalink: /cooking-blog/teas/
 #author_profile: true
 classes: wide
 sidebar:
-  - title: "All Insights"
+  - title: "All Recipes"
     text: "{% include post-list-sidebar.html %}"
 ---
 
 <div class="insights-header">
-  <span class="insights-subtitle">Deep Dives</span>
-  <h2 class="insights-title">Latest Insights</h2>
+  <span class="insights-subtitle">Cooking Blog</span>
+  <h2 class="insights-title">Latest Teas</h2>
 </div>
 
 <div class="insights-grid">
-{% for post in site.categories['insights-blog'] %}
+{% for post in site.categories['teas'] %}
   <div class="insight-card">
     <div class="insight-image-container">
       {% if post.header.teaser %}
