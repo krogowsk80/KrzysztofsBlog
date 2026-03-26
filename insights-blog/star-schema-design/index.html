@@ -1,0 +1,1022 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.26.2 by Michael Rose
+  Copyright 2013-2024 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Star Schema Design—Fact, Dimension, and Grain Decisions at Scale - Data Dive Craft</title>
+<meta name="description" content="Optimize your data warehouse with battle-tested Star Schema design principles. Learn to define fact and dimension tables, understand data grain, leverage partitioning for performance, and build summary facts for executive dashboards in modern data platforms.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Data Dive Craft">
+<meta property="og:title" content="Star Schema Design—Fact, Dimension, and Grain Decisions at Scale">
+<meta property="og:url" content="https://www.datadivecraft.com/insights-blog/star-schema-design/">
+
+
+  <meta property="og:description" content="Optimize your data warehouse with battle-tested Star Schema design principles. Learn to define fact and dimension tables, understand data grain, leverage partitioning for performance, and build summary facts for executive dashboards in modern data platforms.">
+
+
+
+  <meta property="og:image" content="https://www.datadivecraft.com/assets/images/2026/Mar/StarSchemaDesign.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2026-03-12T14:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://www.datadivecraft.com/insights-blog/star-schema-design/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Data Dive Craft Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5CVDJ4XL');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Fonts from code.html -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+<!-- Tailwind CSS from code.html -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#1173d4",
+                    "background-light": "#f6f7f8",
+                    "background-dark": "#101922",
+                },
+                fontFamily: {
+                    "display": ["Inter", "sans-serif"]
+                },
+                borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+        },
+    }
+</script>
+
+<style>
+  /* Override Minimal Mistakes Variables & Styles to match code.html */
+  :root {
+    --background-color: #f6f7f8;
+    --text-color: #0f172a;       /* slate-900 */
+    --primary-color: #1173d4;
+    --link-color: #1173d4;
+    --link-color-hover: #0d5a9b;
+    --masthead-link-color: #0f172a;
+    --masthead-link-color-hover: #1173d4;
+    --footer-background-color: #ffffff;
+    --footer-text-color: #475569; /* slate-600 */
+  }
+
+  body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  /* Force dark mode background on html to match Tailwind config */
+  html {
+    background-color: var(--background-color);
+  }
+
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    color: #0f172a;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+  }
+
+  .page__title {
+    color: #0f172a;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+  }
+
+  /* Masthead (Header) */
+  .masthead {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    border-bottom: 1px solid rgba(17, 115, 212, 0.1) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  
+  .masthead__inner-wrap {
+    background-color: transparent !important;
+  }
+
+  .greedy-nav {
+    background-color: transparent !important;
+  }
+
+  .site-title, .site-title:visited, .site-title:hover {
+    color: #0f172a !important;
+  }
+
+  .masthead__menu-item a {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    color: #334155 !important; /* slate-700 */
+  }
+
+  .masthead__menu-item a:hover {
+    color: var(--primary-color) !important;
+  }
+
+  /* Footer */
+  .page__footer {
+    background-color: var(--footer-background-color);
+    color: var(--footer-text-color);
+    border-top: 1px solid rgba(17, 115, 212, 0.05);
+  }
+  
+  .page__footer footer {
+    color: inherit;
+  }
+
+  /* Buttons */
+  .btn--primary {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border-color: var(--primary-color);
+    font-weight: 700;
+  }
+  
+  .btn--primary:hover {
+    background-color: #0d5a9b;
+    color: #ffffff;
+    border-color: #0d5a9b;
+  }
+
+  /* Remove white background from main content area */
+  .initial-content {
+    background: transparent;
+  }
+
+  .page__content {
+    font-size: 0.95rem;
+  }
+
+  /* Adjust spacing for post header elements */
+  .page__title {
+    margin-bottom: 1rem;
+  }
+
+  .page__inner-wrap .page__meta {
+    margin-bottom: 2rem;
+    color: #475569;
+  }
+
+  /* Archive Items (Blog Posts) as Cards */
+  .archive__item {
+    background-color: #ffffff;
+    border: 1px solid rgba(17, 115, 212, 0.1);
+    border-radius: 12px;
+    padding: 1.5em;
+    margin-bottom: 1.5em;
+    transition: all 0.3s ease;
+  }
+
+  .archive__item article {
+    border: none; /* remove default bottom border */
+  }
+
+  .archive__item-teaser {
+    background-color: transparent;
+    border: 1px solid rgba(17, 115, 212, 0.1);
+  }
+
+  .archive__item:hover {
+    background-color: #ffffff;
+    border-color: rgba(17, 115, 212, 0.4);
+    transform: translateY(-5px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
+  .archive__item-title a {
+    color: #0f172a;
+    text-decoration: none;
+  }
+
+  .archive__item-title a:hover {
+    color: var(--primary-color);
+  }
+
+  .archive__item-excerpt {
+    color: #475569; /* slate-600 */
+  }
+
+  /* General Links */
+  a {
+    color: var(--link-color);
+  }
+  
+  a:hover {
+    color: var(--link-color-hover);
+  }
+  
+  /* Tables and Code */
+  code, kbd, pre, samp {
+    font-family: monospace;
+  }
+
+  /* Insights Page Specific Styles */
+  .insights-header {
+    margin-bottom: 2rem;
+  }
+  
+  .insights-subtitle {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    margin-bottom: 0.5rem;
+    display: block;
+    line-height: 1;
+  }
+  
+  .insights-title {
+    font-size: 1.5rem; /* text-2xl */
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .insights-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .insight-card {
+    display: flex;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(17, 115, 212, 0.1);
+  }
+  
+  .insight-card:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
+
+  .insight-image-container {
+    width: 6rem;
+    height: 6rem;
+    flex-shrink: 0;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background-color: #f1f5f9;
+    border: 1px solid rgba(17, 115, 212, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .insight-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .insight-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .insight-tag {
+    font-size: 12px;
+    color: var(--primary-color);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.25rem;
+  }
+
+  .insight-card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.25;
+    margin: 0;
+  }
+  
+  .insight-card-title a {
+    color: #0f172a;
+    text-decoration: none;
+  }
+  
+  .insight-card-title a:hover {
+    color: var(--primary-color);
+  }
+
+  .insight-date {
+    font-size: 12px;
+    color: #475569;
+    margin-top: 0.5rem;
+    font-weight: 500;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Inject Progress Bar into Masthead to match code.html look
+    const masthead = document.querySelector('.masthead');
+    if (masthead) {
+        // Create progress bar container
+        const progressContainer = document.createElement('div');
+        progressContainer.className = "w-full h-1 bg-gray-200 absolute bottom-0 left-0";
+        
+        const progressBar = document.createElement('div');
+        progressBar.className = "h-full bg-[#1173d4]";
+        progressBar.style.width = "0%";
+        progressBar.id = "scroll-progress";
+        
+        progressContainer.appendChild(progressBar);
+        masthead.appendChild(progressContainer);
+        
+        // Scroll Event
+        window.addEventListener('scroll', () => {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (scrollTop / scrollHeight) * 100;
+            progressBar.style.width = scrolled + "%";
+        });
+    }
+  });
+</script>
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Data Dive Craft
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/insights/"
+                
+                
+              >Insights Blog</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/case-studies/"
+                
+                
+              >Case Studies</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/contact/"
+                
+                
+              >Contact</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >About</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://www.datadivecraft.com/" itemprop="url"></a>
+    </h3>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Star Schema Design—Fact, Dimension, and Grain Decisions at Scale">
+    <meta itemprop="description" content="Star Schema Design—Fact, Dimension, and Grain Decisions at Scale">
+    <meta itemprop="datePublished" content="2026-03-12T14:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://www.datadivecraft.com/insights-blog/star-schema-design/" itemprop="url">Star Schema Design—Fact, Dimension, and Grain Decisions at Scale
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#star-schema-designfact-dimension-and-grain-decisions-at-scale">Star Schema Design—Fact, Dimension, and Grain Decisions at Scale</a><ul><li><a href="#dimensions-keep-it-flat-avoid-the-snowflake">Dimensions: Keep it Flat, Avoid the Snowflake</a><ul><li><a href="#the-multiple-address-snowflake-dilemma">The “Multiple Address” Snowflake Dilemma</a></li></ul></li><li><a href="#facts-defining-the-grain-and-enforcing-purity">Facts: Defining the Grain and Enforcing Purity</a><ul><li><a href="#the-golden-rule-no-strings-allowed">The Golden Rule: No Strings Allowed</a></li><li><a href="#defining-the-grain">Defining the Grain</a></li></ul></li><li><a href="#scale-and-performance-partitioning-the-details">Scale and Performance: Partitioning the Details</a></li><li><a href="#summary-facts-designing-for-the-executive-view">Summary Facts: Designing for the Executive View</a></li><li><a href="#pragmatism-over-purity-the-architects-true-job">Pragmatism Over Purity: The Architect’s True Job</a></li></ul></li></ul>
+            </nav>
+          </aside>
+        
+        <h1 id="star-schema-designfact-dimension-and-grain-decisions-at-scale">Star Schema Design—Fact, Dimension, and Grain Decisions at Scale</h1>
+
+<p>In my previous post, we tackled the complexities of historical tracking using SCD Type 1 and Type 2 logic. But managing history is only half the battle. Once your data is clean and historically accurate, how do you structure it so that a BI dashboard can query 200 million records without timing out?</p>
+
+<p>The answer lies in the architectural bedrock of the modern data warehouse: The Star Schema.</p>
+
+<p>Over the last 13 years, I’ve architected data platforms across government, banking, and pension sectors. I have seen every flavor of data modeling, and I can tell you this: the industry has matured, tools have evolved (hello, Spark and distributed compute), but the fundamental rules of physical data modeling remain the ultimate bottleneck for performance.</p>
+
+<p>Here is my playbook for designing dimension and fact tables that actually perform in the real world.</p>
+
+<p><img src="/assets/images/2026/Mar/StarSchemaDesign.png" alt="Alt Text: A clear, modern illustration of a Star Schema with a central fact table and radiating dimension tables, emphasizing the connections." /></p>
+
+<h2 id="dimensions-keep-it-flat-avoid-the-snowflake">Dimensions: Keep it Flat, Avoid the Snowflake</h2>
+
+<p>When designing dimensions, my rule is simple: I strongly prefer a Star Schema over a Snowflake Schema. I actively avoid building dimensions off of dimensions. Every additional join you introduce into a query path degrades performance, especially in distributed cloud architectures.</p>
+
+<p>A properly designed dimension table must contain three core elements:</p>
+
+<p>The Primary Key (PK): A surrogate key (e.g., D_Client_Key) generated by the data warehouse. This is a meaningless integer used exclusively for joining to the fact table.</p>
+
+<p>The Business Key (BK): The natural key from the source system (e.g., Client_ID). This defines the unique record within the dimension and drives your SCD logic.</p>
+
+<p>The Attributes: The descriptive fields associated with that Business Key (e.g., Client_Name, Gender, Birth_Date).</p>
+
+<h3 id="the-multiple-address-snowflake-dilemma">The “Multiple Address” Snowflake Dilemma</h3>
+
+<p>While I avoid snowflaking, data modeling requires pragmatism. What happens when a client has multiple addresses (e.g., a Home Address and a Billing Address)?</p>
+
+<p>Some architects will normalize this by creating a D_Address table and snowflaking it off the D_Client table via Foreign Keys (FKs). If the address dimension is very small, this might be acceptable. However, I generally advocate for linking addresses directly to the Fact table.</p>
+
+<p>If we are processing a Billing Fact, the Billing_Address_Key belongs directly on that fact record. Even if that address data is technically duplicated as an attribute within the D_Client table, placing the key on the fact table is superior. It ensures that any measures or mapping attributes tied specifically to that billing event are captured at the correct grain, without forcing the reporting engine to traverse through the client dimension to find where the bill was sent.</p>
+
+<h2 id="facts-defining-the-grain-and-enforcing-purity">Facts: Defining the Grain and Enforcing Purity</h2>
+
+<p>The Fact table is the numerical engine of your data model. It should consist entirely of Foreign Keys (pointing to your dimension tables) and Measures (the quantifiable metrics of the business event).</p>
+
+<h3 id="the-golden-rule-no-strings-allowed">The Golden Rule: No Strings Allowed</h3>
+
+<p>Avoid having strings, descriptive text, or categorical attributes within the fact table. Those belong in a dimension. If you find a Transaction_Type_Name varchar column in your fact table, your model is leaking. Move it to a dimension, replace it with a Transaction_Type_Key integer, and watch your storage footprint shrink and your scan speeds soar.</p>
+
+<h3 id="defining-the-grain">Defining the Grain</h3>
+
+<p>The most critical decision in fact table design is defining its grain—what exactly does one single row represent? The grain is driven by the Fact’s Business Key. Is one row a single item on a receipt? Is it the entire receipt? Is it a daily snapshot of an account balance? If you do not explicitly define and document the grain of the fact, you will inevitably end up with double-counting errors in your BI layer.</p>
+
+<h2 id="scale-and-performance-partitioning-the-details">Scale and Performance: Partitioning the Details</h2>
+
+<p>When dealing with massive datasets—such as 200+ million row fact tables—a pristine Star Schema is not enough on its own. You must engineer for the physical realities of data retrieval.</p>
+
+<p>Detail-level facts will inevitably accumulate massive amounts of historical records that are no longer required for day-to-day operational reporting. To alleviate performance bottlenecks, partitioning is mandatory. By physically partitioning the fact table (most commonly by a Date_Key or Month_ID, or occasionally by a specific regional/business grain column), you allow the query engine to perform “partition pruning.” If an analyst queries the last 30 days of data, the database completely ignores the physical files containing the last 5 years of history. When combined with proper indexing strategies, partitioning is the difference between a dashboard loading in 2 seconds versus 2 minutes.</p>
+
+<h2 id="summary-facts-designing-for-the-executive-view">Summary Facts: Designing for the Executive View</h2>
+
+<p>Even with perfect partitioning, calculating Year-over-Year (YoY) performance metrics or seasonality trends on the fly from a 200-million-row detail fact table is computationally expensive. Executive KPI dashboards demand sub-second response times, and scanning millions of rows of atomic data will never achieve that.</p>
+
+<p>This is where Summary Fact Tables become critical. As an architect, I routinely design aggregated fact tables at a summarized grain (e.g., Monthly Sales by Region, rather than Individual Transactions). These summary tables act as the high-speed caching layer for your most critical, high-level dashboards, leaving the detail-level fact tables reserved for deep-dive exploratory analytics.</p>
+
+<h2 id="pragmatism-over-purity-the-architects-true-job">Pragmatism Over Purity: The Architect’s True Job</h2>
+
+<p>I want to end with a controversial, yet vital, philosophy: A data model may look “beautiful” on an ERD, but if the performance of the dashboards and reports is poor, the model has failed.</p>
+
+<p>Too often, data modelers try to keep their Star Schemas academically “pure.” They refuse to calculate derived measures in the database, forcing the front-end BI developers (using DAX or Tableau calculations) to do the heavy lifting at runtime.</p>
+
+<p>A clean, performance-driven design must allow for both elegance and brute force. Front-end developers should ask the data modeler to pre-calculate heavy measures within the Star Schema. As a Data Architect, it is your job to actively work with the BI team. You must check in on them to ensure your design is actually meeting their physical needs.</p>
+
+<p>You must avoid creating architectures that rely on multiple, heavy semantic calculation layers between the Gold data model and the final report. Shift the computation left. Do the heavy lifting once during the ETL/ELT pipeline so that a thousand end-users don’t have to wait for it to happen at runtime.</p>
+
+<p>Data modeling is not an academic exercise; it is an engineering discipline meant to serve the business.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#data-grain" class="page__taxonomy-item p-category" rel="tag">Data Grain</a><span class="sep">, </span>
+    
+      <a href="/tags/#data-modeling" class="page__taxonomy-item p-category" rel="tag">Data Modeling</a><span class="sep">, </span>
+    
+      <a href="/tags/#data-warehousing" class="page__taxonomy-item p-category" rel="tag">Data Warehousing</a><span class="sep">, </span>
+    
+      <a href="/tags/#dimension-tables" class="page__taxonomy-item p-category" rel="tag">Dimension Tables</a><span class="sep">, </span>
+    
+      <a href="/tags/#etl" class="page__taxonomy-item p-category" rel="tag">ETL</a><span class="sep">, </span>
+    
+      <a href="/tags/#fact-tables" class="page__taxonomy-item p-category" rel="tag">Fact Tables</a><span class="sep">, </span>
+    
+      <a href="/tags/#partitioning" class="page__taxonomy-item p-category" rel="tag">Partitioning</a><span class="sep">, </span>
+    
+      <a href="/tags/#star-schema" class="page__taxonomy-item p-category" rel="tag">Star Schema</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#insights-blog" class="page__taxonomy-item p-category" rel="tag">insights-blog</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-03-12T14:00:00+00:00">March 12, 2026</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  <h4 class="page__share-title">Share on</h4>
+
+  <a href="https://twitter.com/intent/tweet?text=Star+Schema+Design%E2%80%94Fact%2C+Dimension%2C+and+Grain+Decisions+at+Scale%20https%3A%2F%2Fwww.datadivecraft.com%2Finsights-blog%2Fstar-schema-design%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.datadivecraft.com%2Finsights-blog%2Fstar-schema-design%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.datadivecraft.com/insights-blog/star-schema-design/" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/insights-blog/engineering-led-architect-performance-optimization/" class="pagination--pager" title="The Engineering-Led Architect: Performance Optimization—Curing Bottlenecks in the Modern Data Lakehouse">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">You may also enjoy</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/2026/Mar/EngineeringLed-Architect-PerformanceOptimization.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/insights-blog/engineering-led-architect-performance-optimization/" rel="permalink">The Engineering-Led Architect: Performance Optimization—Curing Bottlenecks in the Modern Data Lakehouse
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">The Engineering-Led Architect
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/2026/Mar/FoundationForAIDrivenDataStrategies.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/insights-blog/delta-lakehouse-architecture/" rel="permalink">Data Lakehouse Architecture: The Foundation for AI-Driven Data Strategies
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Data Lakehouse Architecture: The Foundation for AI-Driven Data Strategies
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/2026/Mar/DataDiscoveryDatabricksUnityCatalog.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/insights-blog/databricks-unity-catalog-data-discovery/" rel="permalink">Databricks Unity Catalog’s Enhanced Data Discovery: Unlocking Business Context and Trust at Scale
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Databricks Unity Catalog’s Enhanced Data Discovery: Unlocking Business Context and Trust at Scale
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/2026/Mar/DatabricksDataQualityResolutionProcess.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/insights-blog/databricks-handle-data-quality/" rel="permalink">An approach to handling Data Quality in ETL Pipelines: Practices and Strategies
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">An approach to handling Data Quality in ETL Pipelines: Practices and Strategies
+</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+ <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5CVDJ4XL"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<!-- 
+<div class="page__footer-copyright">&copy; 2026 <a href="https://www.datadivecraft.com">Data Dive Craft</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+-->
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://www.datadivecraft.com">Data Dive Craft</a>. <a href="/terms-service/">Terms of Service</a> | <a href="/privacy-policy/">Privacy Policy</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

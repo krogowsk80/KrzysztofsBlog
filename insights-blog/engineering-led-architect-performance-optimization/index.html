@@ -1,0 +1,1019 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.26.2 by Michael Rose
+  Copyright 2013-2024 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>The Engineering-Led Architect: Performance Optimization—Curing Bottlenecks in the Modern Data Lakehouse - Data Dive Craft</title>
+<meta name="description" content="Master data lakehouse performance optimization. Learn how engineering-led architects cure bottlenecks through macro-level pipeline design and micro-level Spark, Delta Lake, partitioning, and Z-Ordering strategies for scalable and efficient data platforms.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Data Dive Craft">
+<meta property="og:title" content="The Engineering-Led Architect: Performance Optimization—Curing Bottlenecks in the Modern Data Lakehouse">
+<meta property="og:url" content="https://www.datadivecraft.com/insights-blog/engineering-led-architect-performance-optimization/">
+
+
+  <meta property="og:description" content="Master data lakehouse performance optimization. Learn how engineering-led architects cure bottlenecks through macro-level pipeline design and micro-level Spark, Delta Lake, partitioning, and Z-Ordering strategies for scalable and efficient data platforms.">
+
+
+
+  <meta property="og:image" content="https://www.datadivecraft.com/assets/images/2026/Mar/EngineeringLed-Architect-PerformanceOptimization.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2026-03-12T14:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://www.datadivecraft.com/insights-blog/engineering-led-architect-performance-optimization/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Data Dive Craft Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5CVDJ4XL');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Fonts from code.html -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+<!-- Tailwind CSS from code.html -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#1173d4",
+                    "background-light": "#f6f7f8",
+                    "background-dark": "#101922",
+                },
+                fontFamily: {
+                    "display": ["Inter", "sans-serif"]
+                },
+                borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+        },
+    }
+</script>
+
+<style>
+  /* Override Minimal Mistakes Variables & Styles to match code.html */
+  :root {
+    --background-color: #f6f7f8;
+    --text-color: #0f172a;       /* slate-900 */
+    --primary-color: #1173d4;
+    --link-color: #1173d4;
+    --link-color-hover: #0d5a9b;
+    --masthead-link-color: #0f172a;
+    --masthead-link-color-hover: #1173d4;
+    --footer-background-color: #ffffff;
+    --footer-text-color: #475569; /* slate-600 */
+  }
+
+  body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  /* Force dark mode background on html to match Tailwind config */
+  html {
+    background-color: var(--background-color);
+  }
+
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    color: #0f172a;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+  }
+
+  .page__title {
+    color: #0f172a;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+  }
+
+  /* Masthead (Header) */
+  .masthead {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    border-bottom: 1px solid rgba(17, 115, 212, 0.1) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  
+  .masthead__inner-wrap {
+    background-color: transparent !important;
+  }
+
+  .greedy-nav {
+    background-color: transparent !important;
+  }
+
+  .site-title, .site-title:visited, .site-title:hover {
+    color: #0f172a !important;
+  }
+
+  .masthead__menu-item a {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    color: #334155 !important; /* slate-700 */
+  }
+
+  .masthead__menu-item a:hover {
+    color: var(--primary-color) !important;
+  }
+
+  /* Footer */
+  .page__footer {
+    background-color: var(--footer-background-color);
+    color: var(--footer-text-color);
+    border-top: 1px solid rgba(17, 115, 212, 0.05);
+  }
+  
+  .page__footer footer {
+    color: inherit;
+  }
+
+  /* Buttons */
+  .btn--primary {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border-color: var(--primary-color);
+    font-weight: 700;
+  }
+  
+  .btn--primary:hover {
+    background-color: #0d5a9b;
+    color: #ffffff;
+    border-color: #0d5a9b;
+  }
+
+  /* Remove white background from main content area */
+  .initial-content {
+    background: transparent;
+  }
+
+  .page__content {
+    font-size: 0.95rem;
+  }
+
+  /* Adjust spacing for post header elements */
+  .page__title {
+    margin-bottom: 1rem;
+  }
+
+  .page__inner-wrap .page__meta {
+    margin-bottom: 2rem;
+    color: #475569;
+  }
+
+  /* Archive Items (Blog Posts) as Cards */
+  .archive__item {
+    background-color: #ffffff;
+    border: 1px solid rgba(17, 115, 212, 0.1);
+    border-radius: 12px;
+    padding: 1.5em;
+    margin-bottom: 1.5em;
+    transition: all 0.3s ease;
+  }
+
+  .archive__item article {
+    border: none; /* remove default bottom border */
+  }
+
+  .archive__item-teaser {
+    background-color: transparent;
+    border: 1px solid rgba(17, 115, 212, 0.1);
+  }
+
+  .archive__item:hover {
+    background-color: #ffffff;
+    border-color: rgba(17, 115, 212, 0.4);
+    transform: translateY(-5px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
+  .archive__item-title a {
+    color: #0f172a;
+    text-decoration: none;
+  }
+
+  .archive__item-title a:hover {
+    color: var(--primary-color);
+  }
+
+  .archive__item-excerpt {
+    color: #475569; /* slate-600 */
+  }
+
+  /* General Links */
+  a {
+    color: var(--link-color);
+  }
+  
+  a:hover {
+    color: var(--link-color-hover);
+  }
+  
+  /* Tables and Code */
+  code, kbd, pre, samp {
+    font-family: monospace;
+  }
+
+  /* Insights Page Specific Styles */
+  .insights-header {
+    margin-bottom: 2rem;
+  }
+  
+  .insights-subtitle {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    margin-bottom: 0.5rem;
+    display: block;
+    line-height: 1;
+  }
+  
+  .insights-title {
+    font-size: 1.5rem; /* text-2xl */
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .insights-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .insight-card {
+    display: flex;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(17, 115, 212, 0.1);
+  }
+  
+  .insight-card:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
+
+  .insight-image-container {
+    width: 6rem;
+    height: 6rem;
+    flex-shrink: 0;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background-color: #f1f5f9;
+    border: 1px solid rgba(17, 115, 212, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .insight-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .insight-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .insight-tag {
+    font-size: 12px;
+    color: var(--primary-color);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.25rem;
+  }
+
+  .insight-card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.25;
+    margin: 0;
+  }
+  
+  .insight-card-title a {
+    color: #0f172a;
+    text-decoration: none;
+  }
+  
+  .insight-card-title a:hover {
+    color: var(--primary-color);
+  }
+
+  .insight-date {
+    font-size: 12px;
+    color: #475569;
+    margin-top: 0.5rem;
+    font-weight: 500;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Inject Progress Bar into Masthead to match code.html look
+    const masthead = document.querySelector('.masthead');
+    if (masthead) {
+        // Create progress bar container
+        const progressContainer = document.createElement('div');
+        progressContainer.className = "w-full h-1 bg-gray-200 absolute bottom-0 left-0";
+        
+        const progressBar = document.createElement('div');
+        progressBar.className = "h-full bg-[#1173d4]";
+        progressBar.style.width = "0%";
+        progressBar.id = "scroll-progress";
+        
+        progressContainer.appendChild(progressBar);
+        masthead.appendChild(progressContainer);
+        
+        // Scroll Event
+        window.addEventListener('scroll', () => {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (scrollTop / scrollHeight) * 100;
+            progressBar.style.width = scrolled + "%";
+        });
+    }
+  });
+</script>
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Data Dive Craft
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/insights/"
+                
+                
+              >Insights Blog</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/case-studies/"
+                
+                
+              >Case Studies</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/contact/"
+                
+                
+              >Contact</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >About</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://www.datadivecraft.com/" itemprop="url"></a>
+    </h3>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="The Engineering-Led Architect: Performance Optimization—Curing Bottlenecks in the Modern Data Lakehouse">
+    <meta itemprop="description" content="The Engineering-Led Architect">
+    <meta itemprop="datePublished" content="2026-03-12T14:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://www.datadivecraft.com/insights-blog/engineering-led-architect-performance-optimization/" itemprop="url">The Engineering-Led Architect: Performance Optimization—Curing Bottlenecks in the Modern Data Lakehouse
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#the-engineering-led-architect">The Engineering-Led Architect</a><ul><li><a href="#performance-optimizationcuring-bottlenecks-in-the-modern-data-lakehouse">Performance Optimization—Curing Bottlenecks in the Modern Data Lakehouse</a></li><li><a href="#the-macro-level-fixing-poor-high-level-design">The Macro-Level: Fixing Poor High-Level Design</a><ul><li><a href="#identifying-the-true-bottleneck">Identifying the True Bottleneck</a></li><li><a href="#the-architectural-fix-decoupling-the-flow">The Architectural Fix: Decoupling the Flow</a></li></ul></li><li><a href="#the-micro-level-data-modeling-and-query-optimization">The Micro-Level: Data Modeling and Query Optimization</a><ul><li><a href="#eradicating-redundant-merge-statements">Eradicating Redundant MERGE Statements</a></li><li><a href="#strategic-caching-and-dag-optimization">Strategic Caching and DAG Optimization</a></li><li><a href="#partitioning-and-z-ordering">Partitioning and Z-Ordering</a></li></ul></li><li><a href="#conclusion">Conclusion:</a></li></ul></li></ul>
+            </nav>
+          </aside>
+        
+        <h1 id="the-engineering-led-architect">The Engineering-Led Architect</h1>
+
+<h2 id="performance-optimizationcuring-bottlenecks-in-the-modern-data-lakehouse">Performance Optimization—Curing Bottlenecks in the Modern Data Lakehouse</h2>
+
+<p>In this series, we have covered the intricacies of historical tracking (SCD logic) and the physical realities of Star Schema design. But what happens when your data models are pristine, your logic is sound, yet your data platform still misses its morning SLAs?</p>
+
+<p>Performance optimization is often misunderstood as purely a coding exercise—adding an index here, tweaking a WHERE clause there. While query optimization is critical, true performance breakthroughs come from an architectural perspective. A Senior Data Architect must be able to identify bottlenecks caused by poor high-level pipeline design just as easily as they can read a Spark execution plan.</p>
+
+<p>Over my 13+ years of enterprise data architecture, I have found that performance issues almost always fall into one of two categories: Macro-Level Flow constraints and Micro-Level Modeling/Query constraints. Here is how I approach solving both.</p>
+
+<h2 id="the-macro-level-fixing-poor-high-level-design">The Macro-Level: Fixing Poor High-Level Design</h2>
+
+<p>Sometimes, the code isn’t the problem; the traffic control is the problem.</p>
+
+<p>I was recently brought in to rescue a massive, 200+ table Medallion architecture load process. The business was failing to meet its 8:00 AM SLA for executive reporting. The Bronze and Silver layers were struggling to process delta records. Because the legacy Oracle source system allowed hard deletes, we couldn’t rely on simple watermark column extracts; entire multi-gigabyte tables (some containing millions of extremely wide records) had to be ingested into Silver for full-table comparisons.</p>
+
+<p>To complicate matters, introducing a Change Data Capture (CDC) tool like Oracle GoldenGate was not an option due to legacy infrastructure constraints.</p>
+
+<h3 id="identifying-the-true-bottleneck">Identifying the True Bottleneck</h3>
+
+<p>When I audited the process, I didn’t immediately rewrite their SQL. I looked at the orchestration.</p>
+
+<p>The pipeline was designed synchronously. Due to integration server constraints, they were extracting five tables at a time. The orchestrator would extract five tables from Oracle to Bronze, and then immediately trigger the Silver layer transformations on Databricks for those five tables.</p>
+
+<p>The fatal flaw: The orchestrator waited for the Databricks Silver load to finish before extracting the next five tables.</p>
+
+<p>The integration server (the bottleneck) sat completely idle while Databricks (a highly scalable distributed compute engine) did the Silver processing. They were starving their own pipeline.</p>
+
+<h3 id="the-architectural-fix-decoupling-the-flow">The Architectural Fix: Decoupling the Flow</h3>
+
+<p>I remodeled the orchestration without changing a single line of underlying transformation code or altering the physical data models.</p>
+
+<p>I implemented an asynchronous, decoupled queue pattern. The integration server’s only job was to continuously extract five tables at a time. As soon as one table finished extracting to Bronze, it immediately handed a token off to a Databricks workflow waiting in the cloud, and the integration server instantly grabbed the next table in the queue to extract.</p>
+
+<p>At all times, the integration server was running at 100% capacity (five active extracts), while Databricks effortlessly scaled its clusters to handle the incoming Silver transformations in parallel.</p>
+
+<p>The Result: The entire Bronze/Silver load process plummeted from an agonizing 6 to 8 hours daily down to just 1.5 to 2.5 hours. No table optimization, no code changes, no underlying architecture overhauls—just a fundamental correction of the high-level data flow.</p>
+
+<h2 id="the-micro-level-data-modeling-and-query-optimization">The Micro-Level: Data Modeling and Query Optimization</h2>
+
+<p>Once the macro-level flow is decoupled and humming, you can turn your attention to the Gold layer, where data modeling and query execution plans dictate performance.</p>
+
+<p>In that same project, the Gold layer processing was taking 3.5 to 4 hours on its own. While the pipeline orchestration was fixed, the actual Spark compute was thrashing. I implemented several targeted optimizations to bring that time down to roughly 2 hours.</p>
+
+<h3 id="eradicating-redundant-merge-statements">Eradicating Redundant MERGE Statements</h3>
+
+<p>In a Delta Lake/Databricks environment, MERGE statements are powerful but computationally expensive because they require scanning the target table, rewriting files, and updating the transaction log.</p>
+
+<p>I found processes that were executing multiple MERGE statements against the same target table within a single run (e.g., merging new inserts, then running a separate merge to update SCD Type 2 expirations). I refactored these into single, unified MERGE operations utilizing complex WHEN MATCHED and WHEN NOT MATCHED clauses. Halving the number of target table scans yielded massive I/O savings.</p>
+
+<h3 id="strategic-caching-and-dag-optimization">Strategic Caching and DAG Optimization</h3>
+
+<p>In complex Gold layer transformations, intermediate datasets are often referenced multiple times (e.g., joining a staging table to three different dimension tables). I optimized the Spark Directed Acyclic Graphs (DAGs) by strategically injecting df.cache() for DataFrames that were reused across multiple downstream actions. This prevented the cluster from recalculating the source extraction and initial transformations multiple times.</p>
+
+<p>Furthermore, I migrated their legacy, disjointed job triggers into unified Databricks Workflows. By enforcing proper task dependencies within a single Workflow DAG, we eliminated cluster start-up overhead and allowed Databricks to intelligently share compute resources across tasks.</p>
+
+<h3 id="partitioning-and-z-ordering">Partitioning and Z-Ordering</h3>
+
+<p>As I discussed in my previous post on Star Schemas, a model that looks perfect on paper can fail in production if the physical layout on disk is ignored.</p>
+
+<p>For the largest Fact tables, query optimization requires aggressive partition pruning. However, over-partitioning can lead to the “small file problem” in cloud storage. We established a strict partitioning strategy based on the Month_ID, ensuring file sizes remained optimal. For high-cardinality columns frequently used in WHERE clauses by the BI layer (like Client_ID), we implemented Z-Ordering (multi-dimensional clustering) on the Delta tables. This allowed the Databricks engine to skip massive amounts of irrelevant data files during query execution, directly accelerating the final reporting dashboards.</p>
+
+<h2 id="conclusion">Conclusion:</h2>
+<p>The Holistic View\n\nOptimizing a modern data platform is a balancing act. If your Gold layer models are bloated with redundant strings, your queries will crawl. If your MERGE statements are poorly written, your clusters will burn unnecessary compute credits. But even with perfect code and perfect models, a synchronous, poorly designed ingestion pipeline will cause you to miss your SLAs.\n\nA successful Data Architect doesn’t just write SQL; they design the entire ecosystem. They ensure the data flows smoothly from the source, lands cleanly in the Lakehouse, and is modeled aggressively for the exact realities of the consumption layer. By optimizing both the macro-flow and the micro-code, we ultimately gave the business its data back before 8:00 AM every single day.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#data-architecture" class="page__taxonomy-item p-category" rel="tag">Data Architecture</a><span class="sep">, </span>
+    
+      <a href="/tags/#data-lakehouse" class="page__taxonomy-item p-category" rel="tag">Data Lakehouse</a><span class="sep">, </span>
+    
+      <a href="/tags/#delta-lake" class="page__taxonomy-item p-category" rel="tag">Delta Lake</a><span class="sep">, </span>
+    
+      <a href="/tags/#etl" class="page__taxonomy-item p-category" rel="tag">ETL</a><span class="sep">, </span>
+    
+      <a href="/tags/#partitioning" class="page__taxonomy-item p-category" rel="tag">Partitioning</a><span class="sep">, </span>
+    
+      <a href="/tags/#performance-optimization" class="page__taxonomy-item p-category" rel="tag">Performance Optimization</a><span class="sep">, </span>
+    
+      <a href="/tags/#spark" class="page__taxonomy-item p-category" rel="tag">Spark</a><span class="sep">, </span>
+    
+      <a href="/tags/#z-ordering" class="page__taxonomy-item p-category" rel="tag">Z-Ordering</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#insights-blog" class="page__taxonomy-item p-category" rel="tag">insights-blog</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-03-12T14:00:00+00:00">March 12, 2026</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  <h4 class="page__share-title">Share on</h4>
+
+  <a href="https://twitter.com/intent/tweet?text=The+Engineering-Led+Architect%3A+Performance+Optimization%E2%80%94Curing+Bottlenecks+in+the+Modern+Data+Lakehouse%20https%3A%2F%2Fwww.datadivecraft.com%2Finsights-blog%2Fengineering-led-architect-performance-optimization%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.datadivecraft.com%2Finsights-blog%2Fengineering-led-architect-performance-optimization%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.datadivecraft.com/insights-blog/engineering-led-architect-performance-optimization/" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/insights-blog/delta-lakehouse-architecture/" class="pagination--pager" title="Data Lakehouse Architecture: The Foundation for AI-Driven Data Strategies">Previous</a>
+    
+    
+      <a href="/insights-blog/star-schema-design/" class="pagination--pager" title="Star Schema Design—Fact, Dimension, and Grain Decisions at Scale">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">You may also enjoy</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/2026/Mar/StarSchemaDesign.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/insights-blog/star-schema-design/" rel="permalink">Star Schema Design—Fact, Dimension, and Grain Decisions at Scale
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Star Schema Design—Fact, Dimension, and Grain Decisions at Scale
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/2026/Mar/FoundationForAIDrivenDataStrategies.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/insights-blog/delta-lakehouse-architecture/" rel="permalink">Data Lakehouse Architecture: The Foundation for AI-Driven Data Strategies
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Data Lakehouse Architecture: The Foundation for AI-Driven Data Strategies
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/2026/Mar/DataDiscoveryDatabricksUnityCatalog.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/insights-blog/databricks-unity-catalog-data-discovery/" rel="permalink">Databricks Unity Catalog’s Enhanced Data Discovery: Unlocking Business Context and Trust at Scale
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Databricks Unity Catalog’s Enhanced Data Discovery: Unlocking Business Context and Trust at Scale
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/2026/Mar/DatabricksDataQualityResolutionProcess.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/insights-blog/databricks-handle-data-quality/" rel="permalink">An approach to handling Data Quality in ETL Pipelines: Practices and Strategies
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">An approach to handling Data Quality in ETL Pipelines: Practices and Strategies
+</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+ <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5CVDJ4XL"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<!-- 
+<div class="page__footer-copyright">&copy; 2026 <a href="https://www.datadivecraft.com">Data Dive Craft</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+-->
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://www.datadivecraft.com">Data Dive Craft</a>. <a href="/terms-service/">Terms of Service</a> | <a href="/privacy-policy/">Privacy Policy</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

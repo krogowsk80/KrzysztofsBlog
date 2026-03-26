@@ -1,0 +1,1057 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.26.2 by Michael Rose
+  Copyright 2013-2024 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+
+<html lang="en-US" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Architecting Slowly Changing Dimensions (SCD Type 1 &amp; Type 2) for Modern Data Platforms - Data Dive Craft</title>
+<meta name="description" content="Master the art of historical data tracking with Slowly Changing Dimensions (SCD Type 1 &amp; Type 2). Learn battle-tested strategies for architecting scalable and performant SCD solutions in modern data platforms like Databricks and Redshift, ensuring unshakeable data integrity.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Data Dive Craft">
+<meta property="og:title" content="Architecting Slowly Changing Dimensions (SCD Type 1 &amp; Type 2) for Modern Data Platforms">
+<meta property="og:url" content="https://www.datadivecraft.com/insights-blog/architecting-scd-type1-type2/">
+
+
+  <meta property="og:description" content="Master the art of historical data tracking with Slowly Changing Dimensions (SCD Type 1 &amp; Type 2). Learn battle-tested strategies for architecting scalable and performant SCD solutions in modern data platforms like Databricks and Redshift, ensuring unshakeable data integrity.">
+
+
+
+  <meta property="og:image" content="https://www.datadivecraft.com/assets/images/2026/Mar/Type1Typ2_SCD.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2026-03-12T14:00:00+00:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://www.datadivecraft.com/insights-blog/architecting-scd-type1-type2/">
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Data Dive Craft Feed">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@latest/css/all.min.css"></noscript>
+
+
+
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-5CVDJ4XL');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Fonts from code.html -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+<!-- Tailwind CSS from code.html -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#1173d4",
+                    "background-light": "#f6f7f8",
+                    "background-dark": "#101922",
+                },
+                fontFamily: {
+                    "display": ["Inter", "sans-serif"]
+                },
+                borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+        },
+    }
+</script>
+
+<style>
+  /* Override Minimal Mistakes Variables & Styles to match code.html */
+  :root {
+    --background-color: #f6f7f8;
+    --text-color: #0f172a;       /* slate-900 */
+    --primary-color: #1173d4;
+    --link-color: #1173d4;
+    --link-color-hover: #0d5a9b;
+    --masthead-link-color: #0f172a;
+    --masthead-link-color-hover: #1173d4;
+    --footer-background-color: #ffffff;
+    --footer-text-color: #475569; /* slate-600 */
+  }
+
+  body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  /* Force dark mode background on html to match Tailwind config */
+  html {
+    background-color: var(--background-color);
+  }
+
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    color: #0f172a;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+  }
+
+  .page__title {
+    color: #0f172a;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+  }
+
+  /* Masthead (Header) */
+  .masthead {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    border-bottom: 1px solid rgba(17, 115, 212, 0.1) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  
+  .masthead__inner-wrap {
+    background-color: transparent !important;
+  }
+
+  .greedy-nav {
+    background-color: transparent !important;
+  }
+
+  .site-title, .site-title:visited, .site-title:hover {
+    color: #0f172a !important;
+  }
+
+  .masthead__menu-item a {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    color: #334155 !important; /* slate-700 */
+  }
+
+  .masthead__menu-item a:hover {
+    color: var(--primary-color) !important;
+  }
+
+  /* Footer */
+  .page__footer {
+    background-color: var(--footer-background-color);
+    color: var(--footer-text-color);
+    border-top: 1px solid rgba(17, 115, 212, 0.05);
+  }
+  
+  .page__footer footer {
+    color: inherit;
+  }
+
+  /* Buttons */
+  .btn--primary {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border-color: var(--primary-color);
+    font-weight: 700;
+  }
+  
+  .btn--primary:hover {
+    background-color: #0d5a9b;
+    color: #ffffff;
+    border-color: #0d5a9b;
+  }
+
+  /* Remove white background from main content area */
+  .initial-content {
+    background: transparent;
+  }
+
+  .page__content {
+    font-size: 0.95rem;
+  }
+
+  /* Adjust spacing for post header elements */
+  .page__title {
+    margin-bottom: 1rem;
+  }
+
+  .page__inner-wrap .page__meta {
+    margin-bottom: 2rem;
+    color: #475569;
+  }
+
+  /* Archive Items (Blog Posts) as Cards */
+  .archive__item {
+    background-color: #ffffff;
+    border: 1px solid rgba(17, 115, 212, 0.1);
+    border-radius: 12px;
+    padding: 1.5em;
+    margin-bottom: 1.5em;
+    transition: all 0.3s ease;
+  }
+
+  .archive__item article {
+    border: none; /* remove default bottom border */
+  }
+
+  .archive__item-teaser {
+    background-color: transparent;
+    border: 1px solid rgba(17, 115, 212, 0.1);
+  }
+
+  .archive__item:hover {
+    background-color: #ffffff;
+    border-color: rgba(17, 115, 212, 0.4);
+    transform: translateY(-5px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
+  .archive__item-title a {
+    color: #0f172a;
+    text-decoration: none;
+  }
+
+  .archive__item-title a:hover {
+    color: var(--primary-color);
+  }
+
+  .archive__item-excerpt {
+    color: #475569; /* slate-600 */
+  }
+
+  /* General Links */
+  a {
+    color: var(--link-color);
+  }
+  
+  a:hover {
+    color: var(--link-color-hover);
+  }
+  
+  /* Tables and Code */
+  code, kbd, pre, samp {
+    font-family: monospace;
+  }
+
+  /* Insights Page Specific Styles */
+  .insights-header {
+    margin-bottom: 2rem;
+  }
+  
+  .insights-subtitle {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    margin-bottom: 0.5rem;
+    display: block;
+    line-height: 1;
+  }
+  
+  .insights-title {
+    font-size: 1.5rem; /* text-2xl */
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .insights-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .insight-card {
+    display: flex;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(17, 115, 212, 0.1);
+  }
+  
+  .insight-card:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
+
+  .insight-image-container {
+    width: 6rem;
+    height: 6rem;
+    flex-shrink: 0;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background-color: #f1f5f9;
+    border: 1px solid rgba(17, 115, 212, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .insight-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .insight-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .insight-tag {
+    font-size: 12px;
+    color: var(--primary-color);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.25rem;
+  }
+
+  .insight-card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.25;
+    margin: 0;
+  }
+  
+  .insight-card-title a {
+    color: #0f172a;
+    text-decoration: none;
+  }
+  
+  .insight-card-title a:hover {
+    color: var(--primary-color);
+  }
+
+  .insight-date {
+    font-size: 12px;
+    color: #475569;
+    margin-top: 0.5rem;
+    font-weight: 500;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Inject Progress Bar into Masthead to match code.html look
+    const masthead = document.querySelector('.masthead');
+    if (masthead) {
+        // Create progress bar container
+        const progressContainer = document.createElement('div');
+        progressContainer.className = "w-full h-1 bg-gray-200 absolute bottom-0 left-0";
+        
+        const progressBar = document.createElement('div');
+        progressBar.className = "h-full bg-[#1173d4]";
+        progressBar.style.width = "0%";
+        progressBar.id = "scroll-progress";
+        
+        progressContainer.appendChild(progressBar);
+        masthead.appendChild(progressContainer);
+        
+        // Scroll Event
+        window.addEventListener('scroll', () => {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (scrollTop / scrollHeight) * 100;
+            progressBar.style.width = scrolled + "%";
+        });
+    }
+  });
+</script>
+
+  </head>
+
+  <body class="layout--single" dir="ltr">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Data Dive Craft
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a
+                href="/insights/"
+                
+                
+              >Insights Blog</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/case-studies/"
+                
+                
+              >Case Studies</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/contact/"
+                
+                
+              >Contact</a>
+            </li><li class="masthead__menu-item">
+              <a
+                href="/about/"
+                
+                
+              >About</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="https://www.datadivecraft.com/" itemprop="url"></a>
+    </h3>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Architecting Slowly Changing Dimensions (SCD Type 1 &amp; Type 2) for Modern Data Platforms">
+    <meta itemprop="description" content="Architecting Slowly Changing Dimensions (SCD Type 1 &amp; Type 2) for Modern Data Platforms">
+    <meta itemprop="datePublished" content="2026-03-12T14:00:00+00:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">
+            <a href="https://www.datadivecraft.com/insights-blog/architecting-scd-type1-type2/" itemprop="url">Architecting Slowly Changing Dimensions (SCD Type 1 &amp; Type 2) for Modern Data Platforms
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#architecting-slowly-changing-dimensions-scd-type-1--type-2-for-modern-data-platforms">Architecting Slowly Changing Dimensions (SCD Type 1 &amp; Type 2) for Modern Data Platforms</a><ul><li><a href="#the-core-philosophy-what-needs-to-be-tracked">The Core Philosophy: What Needs to be Tracked?</a><ul><li><a href="#type-1-the-overwrite-non-business-critical">Type 1: The “Overwrite” (Non-Business Critical)</a></li><li><a href="#type-2-the-historical-track-business-critical">Type 2: The “Historical Track” (Business Critical)</a></li></ul></li><li><a href="#the-anatomy-of-an-scd-table">The Anatomy of an SCD Table</a></li><li><a href="#executing-the-logic-at-scale">Executing the Logic at Scale</a><ul><li><a href="#initializing-the-first-record">Initializing the First Record</a></li><li><a href="#handling-a-type-1-change">Handling a Type 1 Change</a></li><li><a href="#handling-a-type-2-change">Handling a Type 2 Change</a></li></ul></li><li><a href="#real-world-gotchas-and-edge-cases">Real-World “Gotchas” and Edge Cases</a><ul><li><a href="#1-the-time-zone-consideration">1. The Time Zone Consideration</a></li><li><a href="#2-handling-deletes-at-source-via-soft-deletes">2. Handling Deletes at Source via Soft Deletes</a></li></ul></li><li><a href="#conclusion">Conclusion</a></li></ul></li></ul>
+            </nav>
+          </aside>
+        
+        <h1 id="architecting-slowly-changing-dimensions-scd-type-1--type-2-for-modern-data-platforms">Architecting Slowly Changing Dimensions (SCD Type 1 &amp; Type 2) for Modern Data Platforms</h1>
+
+<p>In my 13+ years of architecting enterprise data solutions—from legacy on-premises environments to modern cloud data lakehouses (Azure Databricks, Redshift, etc.)—few topics generate as much debate as historical data tracking.</p>
+
+<p>Whether you are building out the Silver validation layer of a Medallion architecture or designing the final Gold dimensional tables for enterprise reporting, you must have a bulletproof strategy for how your data changes over time. If your dimensional models cannot accurately answer the question, “What did this record look like three years ago?” your reporting is fundamentally flawed.</p>
+
+<p>This brings us to the core of data warehousing methodology: Slowly Changing Dimensions (SCDs). Specifically, defining the logic for Type 1 and Type 2 changes based on business keys.</p>
+
+<p>Here is a deep dive into how I architect these solutions for scale, performance, and unshakeable data integrity.</p>
+
+<p><img src="/assets/images/2026/Mar/Type1Typ2_SCD.png" alt="Alt Text: Flowchart detailing the decision logic for handling new records, Type 1 changes, Type 2 changes, and soft deletes in a dimension table." class="align-center" /></p>
+
+<h2 id="the-core-philosophy-what-needs-to-be-tracked">The Core Philosophy: What Needs to be Tracked?</h2>
+
+<p>At its simplest, SCD logic is about defining exactly what changes need to be tracked in a table given the business keys for a given entity. Not all data is created equal, and treating every minor update as a historical event will bloat your data warehouse and destroy query performance.</p>
+
+<p>We typically divide these changes into two categories:</p>
+
+<h3 id="type-1-the-overwrite-non-business-critical">Type 1: The “Overwrite” (Non-Business Critical)</h3>
+
+<p>Type 1 changes are used when we do not need to preserve the history of a specific attribute. This is typically reserved for corrections to data entry errors or changes to non-business-critical fields.</p>
+
+<p>Example: A customer’s first name was entered as “Jonh” instead of “John”. We do not need a historical record showing that we once thought his name was Jonh. We simply overwrite the record with the correct spelling.</p>
+
+<h3 id="type-2-the-historical-track-business-critical">Type 2: The “Historical Track” (Business Critical)</h3>
+
+<p>Type 2 changes are the lifeblood of accurate point-in-time reporting. When a business-critical attribute changes, we must preserve the old record and create a new one to reflect the current state.</p>
+
+<p>Example: A customer changes their street address. If they place an order today, we need to know their current address. But if we run a regional sales report for 2022, that order must be tied to their old address. Type 2 logic ensures both realities exist simultaneously in the database.</p>
+
+<h2 id="the-anatomy-of-an-scd-table">The Anatomy of an SCD Table</h2>
+
+<p>To manage this time-traveling act, we cannot rely solely on the data provided by the source system. We must inject our own architectural metadata into the dimension tables. For every table tracking Type 2 history, I mandate the inclusion of the following control columns:</p>
+
+<p>record_start_effective_dt: The timestamp when this specific version of the record became active.</p>
+
+<p>record_end_effective_dt: The timestamp when this specific version of the record ceased to be active.</p>
+
+<p>current_ind: A quick-reference indicator (usually an integer) to flag the currently active record.</p>
+
+<p>last_update_dt: The timestamp of the most recent modification to the row (crucial for tracking Type 1 updates on a Type 2 row).</p>
+
+<p>create_dt: The exact timestamp the row was physically inserted into our database.</p>
+
+<p>rec_type_cd: A custom record type code I always add to help classify the nature of the row or the ingestion pattern that created it.</p>
+
+<h2 id="executing-the-logic-at-scale">Executing the Logic at Scale</h2>
+
+<p>When a new file or stream arrives from the source system, the ETL/ELT engine (whether that is PySpark on Databricks, Azure Data Factory, or dbt on Redshift) must compare the incoming business keys against the target table.</p>
+
+<h3 id="initializing-the-first-record">Initializing the First Record</h3>
+
+<p>When a brand new business key appears, we insert it. But what do we use for the record_start_effective_dt?</p>
+
+<p>While it is tempting to use the record creation date from the source system (if viable), my experience has shown this can be dangerous. With older legacy systems, changes at the source often do not occur in the expected chronological order. Late-arriving data can wreak havoc on your timelines.</p>
+
+<p>Because of this, I prefer to initialize the very first record of a new entity with a default start date of 1900-01-01. This approach acts as a catch-all, ensuring we always have a valid value for the record backward through time, preventing outer-join failures in our BI layer when dealing with historical fact records that might pre-date the source system’s creation timestamp.</p>
+
+<p>The record_end_effective_dt for this active record is set to the maximum viable date, typically 9999-12-30.</p>
+
+<h3 id="handling-a-type-1-change">Handling a Type 1 Change</h3>
+
+<p>If the incoming data shows a change only to a Type 1 attribute (e.g., the first name correction), the engine performs a simple update. We overwrite the first name field and update our last_update_dt to CURRENT_TIMESTAMP. The start and end effective dates remain completely untouched.</p>
+
+<h3 id="handling-a-type-2-change">Handling a Type 2 Change</h3>
+
+<p>If the incoming data shows a change to a Type 2 attribute (e.g., the street address), the engine must perform a precise surgical operation:</p>
+
+<p>Expire the Existing Record: We take the currently active record (where record_end_effective_dt is 9999-12-30) and update its end date to the exact time the change occurred in the source system. The Architect’s Secret: To prevent overlapping timelines and ensure that a “BETWEEN” SQL query doesn’t accidentally pull two records for the exact same millisecond, I apply a slight offset to the expiration date. Typically, I subtract 0.0001 nanoseconds (NS) from the change date.</p>
+
+<p>Insert the New Record: We insert the new row with the updated address. The record_start_effective_dt is set to the exact time the change occurred in the source system, and the record_end_effective_dt is set to 9999-12-30.</p>
+
+<p>Update Indicators: The old record’s current_ind is flipped to indicate it is historical, and the new record’s current_ind is set to active.</p>
+
+<h2 id="real-world-gotchas-and-edge-cases">Real-World “Gotchas” and Edge Cases</h2>
+
+<p>In a perfect world, the logic above runs flawlessly. However, in enterprise environments, the world is rarely perfect. Here are two massive edge cases you must architect for:</p>
+
+<h3 id="1-the-time-zone-consideration">1. The Time Zone Consideration</h3>
+
+<p>Data does not respect geography. If your source system is a legacy application running in the Toronto time zone (EST/EDT) but your target data warehouse is configured to UTC, a change that happens at 10:00 PM in Toronto actually happens at 2:00 AM the next day in UTC.</p>
+
+<p>If you do not explicitly handle time zone conversions during your SCD processing, your record_start_effective_dt will drift, leading to mismatched joins with fact tables. Special considerations and explicit casting to UTC must be handled at the ingestion layer before the SCD merge logic ever fires.</p>
+
+<h3 id="2-handling-deletes-at-source-via-soft-deletes">2. Handling Deletes at Source via Soft Deletes</h3>
+
+<p>What happens when a record is deleted in the source system? Hard deleting data in a data warehouse is generally an architectural sin. We need to preserve the history, but ensure the BI layer knows the entity no longer exists in the operational system.</p>
+
+<p>I typically handle soft deletes using one of two methods, depending on the constraints of the consumption layer:</p>
+
+<ul>
+  <li>
+    <p>The Multi-State Flag: I use the current_flag as a small integer to track state. 1 means the record is current and active. 2 means the record is a historical (past) Type 2 version. 3 means the record has been soft-deleted at the source.</p>
+  </li>
+  <li>
+    <p>The Explicit Indicator: Alternatively, if the reporting layer requires simpler boolean logic, I will add a dedicated deleted_ind column. In this scenario, when a delete is detected, the current_ind remains 1 (because it is technically the most current state of that record), but the deleted_ind is set to true.</p>
+  </li>
+</ul>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Data modeling is not just about drawing boxes and lines; it is about writing the rules of reality for your organization’s history. By implementing rigorous, defensively designed SCD Type 1 and Type 2 logic—accounting for microsecond overlaps, time zone drifts, and soft deletes—you build a foundation that analysts and data scientists can actually trust.</p>
+
+<p>In the next post, I will be breaking down how these dimension tables interact with massive, 200-million-row fact tables, and the architectural decisions behind designing highly performant Star Schemas.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#data-integrity" class="page__taxonomy-item p-category" rel="tag">Data Integrity</a><span class="sep">, </span>
+    
+      <a href="/tags/#data-warehousing" class="page__taxonomy-item p-category" rel="tag">Data Warehousing</a><span class="sep">, </span>
+    
+      <a href="/tags/#databricks" class="page__taxonomy-item p-category" rel="tag">Databricks</a><span class="sep">, </span>
+    
+      <a href="/tags/#etl" class="page__taxonomy-item p-category" rel="tag">ETL</a><span class="sep">, </span>
+    
+      <a href="/tags/#redshift" class="page__taxonomy-item p-category" rel="tag">Redshift</a><span class="sep">, </span>
+    
+      <a href="/tags/#scd" class="page__taxonomy-item p-category" rel="tag">SCD</a><span class="sep">, </span>
+    
+      <a href="/tags/#slowly-changing-dimensions" class="page__taxonomy-item p-category" rel="tag">Slowly Changing Dimensions</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#insights-blog" class="page__taxonomy-item p-category" rel="tag">insights-blog</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2026-03-12T14:00:00+00:00">March 12, 2026</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  <h4 class="page__share-title">Share on</h4>
+
+  <a href="https://twitter.com/intent/tweet?text=Architecting+Slowly+Changing+Dimensions+%28SCD+Type+1+%26+Type+2%29+for+Modern+Data+Platforms%20https%3A%2F%2Fwww.datadivecraft.com%2Finsights-blog%2Farchitecting-scd-type1-type2%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.datadivecraft.com%2Finsights-blog%2Farchitecting-scd-type1-type2%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.datadivecraft.com/insights-blog/architecting-scd-type1-type2/" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/insights-blog/databricks-agent-bricks-knowledge-assistant/" class="pagination--pager" title="Unlocking Enterprise Knowledge: A Deep Dive into Databricks’ Agent Bricks for Intelligent Assistance">Previous</a>
+    
+    
+      <a href="/insights-blog/azure-ai-pitches/" class="pagination--pager" title="Azure AI in Telecommunications: Driving ROI with a Unified, Trusted Platform">Next</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    
+<div class="page__related">
+  
+  <h2 class="page__related-title">You may also enjoy</h2>
+  <div class="grid__wrapper">
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/2026/Mar/StarSchemaDesign.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/insights-blog/star-schema-design/" rel="permalink">Star Schema Design—Fact, Dimension, and Grain Decisions at Scale
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Star Schema Design—Fact, Dimension, and Grain Decisions at Scale
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/2026/Mar/EngineeringLed-Architect-PerformanceOptimization.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/insights-blog/engineering-led-architect-performance-optimization/" rel="permalink">The Engineering-Led Architect: Performance Optimization—Curing Bottlenecks in the Modern Data Lakehouse
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">The Engineering-Led Architect
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/2026/Mar/FoundationForAIDrivenDataStrategies.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/insights-blog/delta-lakehouse-architecture/" rel="permalink">Data Lakehouse Architecture: The Foundation for AI-Driven Data Strategies
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Data Lakehouse Architecture: The Foundation for AI-Driven Data Strategies
+</p>
+  </article>
+</div>
+
+    
+      
+      
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/2026/Mar/DataDiscoveryDatabricksUnityCatalog.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/insights-blog/databricks-unity-catalog-data-discovery/" rel="permalink">Databricks Unity Catalog’s Enhanced Data Discovery: Unlocking Business Context and Trust at Scale
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Databricks Unity Catalog’s Enhanced Data Discovery: Unlocking Business Context and Trust at Scale
+</p>
+  </article>
+</div>
+
+    
+  </div>
+</div>
+
+  
+  
+</div>
+
+      
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+ <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5CVDJ4XL"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<!-- 
+<div class="page__footer-copyright">&copy; 2026 <a href="https://www.datadivecraft.com">Data Dive Craft</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/jekyll-themes/minimal-mistakes/" rel="nofollow">Minimal Mistakes</a>.</div>
+-->
+
+<div class="page__footer-copyright">&copy; 2026 <a href="https://www.datadivecraft.com">Data Dive Craft</a>. <a href="/terms-service/">Terms of Service</a> | <a href="/privacy-policy/">Privacy Policy</a>. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
